@@ -25,7 +25,7 @@ st.set_page_config(page_title="BØK 3423 Eksamenstrener", page_icon="🎓", layo
 LANG = {
     "no": {
         "app_title": "BØK 3423 Eksamenstrener",
-        "tabs": ["Hjem", "Lær", "Oppgaver", "Smart økt", "AI-trener", "Formler", "Chat", "Fremgang", "Kalkulator"],
+        "tabs": ["Hjem", "Lær", "Oppgaver", "Smart økt", "AI-trener", "Formler", "Chat", "Fremgang", "Kalkulator", "Ressurser"],
         "days_to_exam": "dager til eksamen · 1. juni 2026",
         "focus_build": "Fokus: Forstå konseptene. Bruk Lær-fanen og AI-treneren med «Forklar tilbake».",
         "focus_mix": "Fokus: Bland temaer! Bruk Smart økt for interleaving. Beregningsoppgaver med kalkulator.",
@@ -126,27 +126,43 @@ LANG = {
         "ai_explain_msg": "Forklar løsningen grundig med intuisjon og kalkulatorsteg.",
         "ai_system_full": """Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk.
 
+AKADEMISK FUNDAMENT:
+Pensum er basert på Berk & DeMarzo «Corporate Finance» og Brealey, Myers & Allen «Principles of Corporate Finance».
+Når du forklarer konsepter, referer til etablert finansteori og pensum der det er relevant.
+For eksempel: «Som Modigliani og Miller viste (1958)...» eller «I henhold til CAPM (Sharpe, 1964)...».
+Bruk verifisert kunnskap fra disse kildene — ikke spekuler utover pensum.
+
 PEDAGOGISKE REGLER:
 1. Gi ALDRI fasit før studenten har prøvd — still spørsmål, vent, evaluer.
-2. Forklar ALLTID intuisjonen (HVORFOR) før formelen (HVORDAN).
-3. Ved feil: forklar nøyaktig hva studenten misforsto, ikke bare si "feil".
-4. Vis HP 10bII+ tastetrykk for alle beregninger.
-5. Bruk eksamensformat: tabeller, realistiske tall, BI-språk.
-6. Avslutt alltid med ett konkret spørsmål til studenten.
-7. Riktig svar: «Riktig — og dette er akkurat det eksamen tester. [kort forklaring av hvorfor]»
-8. Feil svar: «Nesten — de fleste gjør denne feilen fordi [konkret årsak]. Prøv igjen med dette hintet: [hint]»""",
-        "ai_system_short": "Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk. Gi aldri fasit direkte. Forklar intuisjon først. Vis HP 10bII+ tastetrykk. Behandle feil som læringsmomenter. Avslutt med neste spørsmål.",
-        "chat_system": "Du er finanstutor for BØK 3423 Finans (BI). Norsk. Direkte. Bruk formler, eksempler og HP 10bII+ tastetrykk.",
+2. Strukturer forklaringer i tre nivåer: (1) INTUISJON — hvorfor konseptet finnes, (2) FORMEL — den matematiske sammenhengen, (3) ANVENDELSE — konkret eksempel med tall.
+3. Forklar ALLTID intuisjonen (HVORFOR) før formelen (HVORDAN).
+4. Ved feil: forklar nøyaktig hva studenten misforsto, referer til vanlige misforståelser fra pensum.
+5. Vis HP 10bII+ tastetrykk for alle beregninger.
+6. Bruk eksamensformat: tabeller, realistiske tall, BI-språk.
+7. Avslutt alltid med ett konkret spørsmål til studenten.
+8. Riktig svar: «Riktig — og dette er akkurat det eksamen tester. [kort forklaring av hvorfor]»
+9. Feil svar: «Nesten — de fleste gjør denne feilen fordi [konkret årsak]. Prøv igjen med dette hintet: [hint]»
+10. Når relevant, vis hvordan konseptet henger sammen med andre temaer i faget (tverrkobling).""",
+        "ai_system_short": "Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk. Referer til pensum (Berk & DeMarzo) der relevant. Gi aldri fasit direkte. Forklar intuisjon først, deretter formel, deretter anvendelse. Vis HP 10bII+ tastetrykk. Behandle feil som læringsmomenter. Vis tverrkobling mellom temaer. Avslutt med neste spørsmål.",
+        "chat_system": "Du er finanstutor for BØK 3423 Finans (BI). Norsk. Direkte. Bruk formler, eksempler og HP 10bII+ tastetrykk. Referer til pensum (Berk & DeMarzo, Brealey/Myers/Allen) der relevant. Strukturer svar: intuisjon → formel → eksempel. Vis sammenhenger mellom temaer.",
         "chat_suggestions": ["Forklar CAPM", "IRR vs NPV?", "WACC steg for steg", "Gordon Growth?", "MM med/uten skatt", "Sharpe vs beta"],
         "diff_instructions": [
             "Bruk enkle tall og ett steg om gangen.",
             "Bruk realistiske eksamenstall.",
             "Bruk komplekse oppgaver med flere steg og tidspress.",
         ],
+        "resources_title": "📚 Ressurser & Kilder",
+        "resources_intro": "Kuraterte ressurser organisert etter tema. Alle kilder er verifiserte og brukes i undervisningen.",
+        "textbook_section": "📖 Pensumbøker",
+        "video_section": "🎬 Videoressurser",
+        "tools_section": "🧮 Verktøy & Kalkulatorer",
+        "academic_section": "🎓 Akademiske kilder",
+        "textbook_ref": "Pensum",
+        "cross_ref": "Henger sammen med",
     },
     "en": {
         "app_title": "BØK 3423 Exam Trainer",
-        "tabs": ["Home", "Learn", "Exercises", "Smart Session", "AI Trainer", "Formulas", "Chat", "Progress", "Calculator"],
+        "tabs": ["Home", "Learn", "Exercises", "Smart Session", "AI Trainer", "Formulas", "Chat", "Progress", "Calculator", "Resources"],
         "days_to_exam": "days until exam · June 1, 2026",
         "focus_build": "Focus: Understand the concepts. Use the Learn tab and AI trainer with 'Explain back'.",
         "focus_mix": "Focus: Mix topics! Use Smart session for interleaving. Calculation exercises with calculator.",
@@ -247,23 +263,39 @@ PEDAGOGISKE REGLER:
         "ai_explain_msg": "Explain the solution thoroughly with intuition and calculator steps.",
         "ai_system_full": """You are an exam tutor for BØK 3423 Finance at BI Norwegian Business School. Always respond in English.
 
+ACADEMIC FOUNDATION:
+The curriculum is based on Berk & DeMarzo "Corporate Finance" and Brealey, Myers & Allen "Principles of Corporate Finance".
+When explaining concepts, reference established finance theory and the textbook where relevant.
+For example: "As Modigliani and Miller showed (1958)..." or "According to CAPM (Sharpe, 1964)...".
+Use verified knowledge from these sources — do not speculate beyond the curriculum.
+
 PEDAGOGICAL RULES:
 1. NEVER give the answer before the student has tried — ask questions, wait, evaluate.
-2. ALWAYS explain the intuition (WHY) before the formula (HOW).
-3. On errors: explain exactly what the student misunderstood, don't just say "wrong".
-4. Show HP 10bII+ keystrokes for all calculations.
-5. Use exam format: tables, realistic numbers.
-6. Always end with one concrete question to the student.
-7. Correct answer: "Correct — and this is exactly what the exam tests. [brief explanation of why]"
-8. Wrong answer: "Almost — most make this mistake because [specific cause]. Try again with this hint: [hint]" """,
-        "ai_system_short": "You are an exam tutor for BØK 3423 Finance at BI. Always respond in English. Never give answers directly. Explain intuition first. Show HP 10bII+ keystrokes. Treat errors as learning moments. End with next question.",
-        "chat_system": "You are a finance tutor for BØK 3423 Finance (BI). English. Direct. Use formulas, examples and HP 10bII+ keystrokes.",
+2. Structure explanations in three levels: (1) INTUITION — why the concept exists, (2) FORMULA — the mathematical relationship, (3) APPLICATION — concrete example with numbers.
+3. ALWAYS explain the intuition (WHY) before the formula (HOW).
+4. On errors: explain exactly what the student misunderstood, reference common misconceptions from the textbook.
+5. Show HP 10bII+ keystrokes for all calculations.
+6. Use exam format: tables, realistic numbers.
+7. Always end with one concrete question to the student.
+8. Correct answer: "Correct — and this is exactly what the exam tests. [brief explanation of why]"
+9. Wrong answer: "Almost — most make this mistake because [specific cause]. Try again with this hint: [hint]"
+10. When relevant, show how the concept connects to other topics in the course (cross-referencing).""",
+        "ai_system_short": "You are an exam tutor for BØK 3423 Finance at BI. Always respond in English. Reference the textbook (Berk & DeMarzo) where relevant. Never give answers directly. Explain intuition first, then formula, then application. Show HP 10bII+ keystrokes. Treat errors as learning moments. Show cross-connections between topics. End with next question.",
+        "chat_system": "You are a finance tutor for BØK 3423 Finance (BI). English. Direct. Use formulas, examples and HP 10bII+ keystrokes. Reference the textbook (Berk & DeMarzo, Brealey/Myers/Allen) where relevant. Structure answers: intuition → formula → example. Show connections between topics.",
         "chat_suggestions": ["Explain CAPM", "IRR vs NPV?", "WACC step by step", "Gordon Growth?", "MM with/without tax", "Sharpe vs beta"],
         "diff_instructions": [
             "Use simple numbers and one step at a time.",
             "Use realistic exam numbers.",
             "Use complex exercises with multiple steps and time pressure.",
         ],
+        "resources_title": "📚 Resources & Sources",
+        "resources_intro": "Curated resources organized by topic. All sources are verified and used in the curriculum.",
+        "textbook_section": "📖 Textbooks",
+        "video_section": "🎬 Video resources",
+        "tools_section": "🧮 Tools & Calculators",
+        "academic_section": "🎓 Academic sources",
+        "textbook_ref": "Textbook",
+        "cross_ref": "Connected to",
     },
 }
 
@@ -918,6 +950,108 @@ CHARTS = {
     ],
 }
 
+# ─── RESOURCES (displayed in-app, no external links needed) ─────────────────
+
+RESOURCES = {
+    "textbooks": [
+        {
+            "title": "Berk & DeMarzo — Corporate Finance",
+            "role": "Hovedpensum",
+            "chapters": {
+                "tidsverdi": "Kap. 3–4: Time Value of Money, NPV, IRR",
+                "capm": "Kap. 11: Risk and Return in Capital Markets, Kap. 12: CAPM",
+                "portefolje": "Kap. 11: Diversification, Systematic Risk",
+                "wacc": "Kap. 12–14: Cost of Capital, Capital Structure",
+                "oblig": "Kap. 6: Valuing Bonds, Kap. 7: Valuing Stocks",
+                "lan": "Kap. 4–5: Annuities, Loan Amortization",
+                "invest": "Kap. 8–9: Investment Decision Rules, Capital Budgeting",
+            },
+            "color": "#3b82f6",
+        },
+        {
+            "title": "Brealey, Myers & Allen — Principles of Corporate Finance",
+            "role": "Støttelitteratur",
+            "chapters": {
+                "tidsverdi": "Kap. 2: How to Calculate Present Values",
+                "capm": "Kap. 8: Portfolio Theory and CAPM",
+                "portefolje": "Kap. 7: Introduction to Risk and Return",
+                "wacc": "Kap. 17–18: Capital Structure, WACC",
+                "oblig": "Kap. 3: Valuing Bonds, Kap. 4: Valuing Stocks",
+                "lan": "Kap. 2: Annuities and Perpetuities",
+                "invest": "Kap. 5–6: NPV and Other Investment Criteria",
+            },
+            "color": "#a78bfa",
+        },
+    ],
+    "topic_insights": {
+        "tidsverdi": {
+            "why_it_matters": "Pengenes tidsverdi er fundamentet for hele finansfaget. Uten dette konseptet kan du ikke verdsette prosjekter, obligasjoner, aksjer eller lån. Alt i BØK 3423 bygger på dette.",
+            "real_world": "Når du vurderer et boliglån, sammenligner jobbtilbud med ulike bonusstrukturer, eller planlegger pensjonssparing — du bruker tidsverdi.",
+            "connects_to": ["oblig", "lan", "invest", "wacc"],
+            "key_thinkers": "Irving Fisher (1930) la grunnlaget for tidsverditeori. John Burr Williams (1938) utviklet DCF-metoden.",
+            "exam_weight": "Dukker opp i ~70 % av eksamensoppgavene, enten direkte eller som del av andre beregninger.",
+        },
+        "capm": {
+            "why_it_matters": "CAPM kobler risiko og avkastning matematisk. Det gir deg et verktøy for å avgjøre om en aksje er billig eller dyr — og hva du BØR kreve i avkastning.",
+            "real_world": "Fondsforvaltere måles på alfa (Jensens). Selskaper bruker CAPM for å finne egenkapitalkostnaden i WACC. Analytikere plotter aksjer mot SML.",
+            "connects_to": ["portefolje", "wacc"],
+            "key_thinkers": "William Sharpe (1964), John Lintner (1965), Jan Mossin (1966). Sharpe fikk Nobelprisen i 1990.",
+            "exam_weight": "Fast innslag på eksamen. Ofte kombinert med WACC-beregning eller porteføljeanalyse.",
+        },
+        "portefolje": {
+            "why_it_matters": "Porteføljeteori viser at du kan redusere risiko uten å ofre avkastning — bare ved å kombinere aksjer smart. Dette er diversifiseringens kraft.",
+            "real_world": "Alle indeksfond er bygget på denne teorien. Når rådgivere sier «ikke legg alle eggene i én kurv» — det er Markowitz i praksis.",
+            "connects_to": ["capm", "wacc"],
+            "key_thinkers": "Harry Markowitz (1952) — «Portfolio Selection». Nobelprisen 1990. Grunnla modern porteføljeteori.",
+            "exam_weight": "Beregning av porteføljerisiko med korrelasjon er en klassiker. Sharpe-ratio brukes til å rangere.",
+        },
+        "wacc": {
+            "why_it_matters": "WACC er diskonteringsrenten i DCF-verdsettelse. Feil WACC = feil selskapsverdi. Det er limet mellom kapitalstruktur og verdsettelse.",
+            "real_world": "Hver gang et selskap vurderer et nytt prosjekt, brukes WACC som krav. Investeringsbanker beregner WACC daglig.",
+            "connects_to": ["capm", "invest", "oblig"],
+            "key_thinkers": "Modigliani & Miller (1958, 1963). M&M-proposisjonene er fundamentale — uten skatt er struktur irrelevant, med skatt skaper gjeld verdi.",
+            "exam_weight": "Nesten alltid en WACC-oppgave. Ofte koblet til CAPM (for Re) og investeringsanalyse.",
+        },
+        "oblig": {
+            "why_it_matters": "Obligasjoner er det enkleste eksempelet på verdsettelse — faste kontantstrømmer diskontert tilbake. Forstår du obligasjoner, forstår du fundamentet for all verdsettelse.",
+            "real_world": "Statsobligasjoner setter risikofri rente. Sentralbanker styrer økonomien gjennom obligasjonsmarkedet. Bedrifter finansierer seg med gjeld.",
+            "connects_to": ["tidsverdi", "wacc"],
+            "key_thinkers": "Frederick Macaulay (1938) — durasjons-konseptet. Yield curve-teori fra John Hicks.",
+            "exam_weight": "Obligasjonspris og YTM er standard beregningsoppgaver. Gordon Growth for aksjer.",
+        },
+        "lan": {
+            "why_it_matters": "Lån er den mest praktiske anvendelsen av tidsverdi. Annuitet vs. serielån er et klassisk skille som tester om du forstår hvordan rente beregnes på restgjeld.",
+            "real_world": "Boliglånet ditt. Billånet. Studielånet. Du bruker denne kunnskapen resten av livet.",
+            "connects_to": ["tidsverdi"],
+            "key_thinkers": "Amortiseringstabeller har vært brukt i hundrevis av år. Konseptet er direkte utledet fra annuitetsformelen.",
+            "exam_weight": "Serielån med nedbetalingsplan er en vanlig oppgave. Annuitetslån løses med kalkulator.",
+        },
+        "invest": {
+            "why_it_matters": "Investeringsanalyse (DCF) er det finansfolk faktisk gjør — verdsetter selskaper og prosjekter. FCF + WACC + terminalverdi = selskapsverdi.",
+            "real_world": "M&A-transaksjoner, børsnoteringer, prosjektbeslutninger — alt starter med en DCF-analyse.",
+            "connects_to": ["tidsverdi", "wacc"],
+            "key_thinkers": "John Burr Williams (1938) — The Theory of Investment Value. Grunnla DCF-metoden som brukes i dag.",
+            "exam_weight": "FCF-beregning og terminalverdi er typiske eksamensoppgaver. Sensititivitetsanalyse av WACC/g.",
+        },
+    },
+    "concepts_overview": [
+        {"topic": "Pengenes tidsverdi", "level": "Fundament", "order": 1, "color": "#3b82f6",
+         "summary": "Alt starter her. En krone i dag > en krone i morgen. FV, PV, NPV, IRR, annuitet, perpetuitet."},
+        {"topic": "Obligasjoner & aksjer", "level": "Bygger på tidsverdi", "order": 2, "color": "#ef4444",
+         "summary": "Verdsettelse av faste kontantstrømmer (obligasjoner) og voksende kontantstrømmer (aksjer med Gordon)."},
+        {"topic": "Lån", "level": "Bygger på tidsverdi", "order": 2, "color": "#60a5fa",
+         "summary": "Praktisk bruk av annuitetsformelen. Annuitetslån vs. serielån, nedbetalingsplaner."},
+        {"topic": "Porteføljeteori", "level": "Risiko & avkastning", "order": 3, "color": "#22c55e",
+         "summary": "Diversifisering, korrelasjon, Sharpe-ratio. Hvordan kombinere aksjer for å redusere risiko."},
+        {"topic": "CAPM & SML", "level": "Bygger på porteføljeteori", "order": 4, "color": "#a78bfa",
+         "summary": "Sammenhengen mellom systematisk risiko (beta) og forventet avkastning. Alfa, SML, over/under."},
+        {"topic": "Kapitalstruktur & WACC", "level": "Bygger på CAPM", "order": 5, "color": "#f59e0b",
+         "summary": "Kostnad for EK (via CAPM) + kostnad for gjeld (etter skatt). MM-proposisjonene. Skatteskjold."},
+        {"topic": "Investeringsanalyse", "level": "Bruker alt", "order": 6, "color": "#fb923c",
+         "summary": "DCF-verdsettelse: FCF + WACC + terminalverdi. Samler alle konseptene til én analyse."},
+    ],
+}
+
 # ─── FORMLER ─────────────────────────────────────────────────────────────────
 
 ALL_FORMULAS = [
@@ -934,6 +1068,7 @@ ALL_FORMULAS = [
 
 LEARN = {
     "tidsverdi": {"title":"Pengenes tidsverdi",
+        "ref": "Berk & DeMarzo kap. 3–4 · Brealey/Myers/Allen kap. 2",
         "intro":"Dette er det mest grunnleggende konseptet i hele finansfaget. Hele poenget er enkelt: en krone du har i dag er mer verdt enn en krone du f\u00e5r i fremtiden. Hvorfor? Fordi du kan investere kronen i dag og la den vokse. Denne enkle innsikten er fundamentet for alt annet i B\u00d8K 3423 \u2014 fra prosjektvurdering til obligasjonsprising til l\u00e5neberegning.",
         "concepts":[
             {"name":"Fremtidig verdi (FV) og N\u00e5verdi (PV)",
@@ -958,6 +1093,7 @@ LEARN = {
              "calc":"[PMT] [N] [I/YR] [FV=0] \u2192 [COMP] [PV] gir n\u00e5verdien av annuiteten"},
         ]},
     "capm": {"title":"CAPM & Security Market Line",
+        "ref": "Berk & DeMarzo kap. 11–12 · Brealey/Myers/Allen kap. 8",
         "intro":"Capital Asset Pricing Model (CAPM) er en av de mest sentrale modellene i finans. Den svarer p\u00e5 et fundamentalt sp\u00f8rsm\u00e5l: Gitt risikoen til en aksje, hva B\u00d8R den forventede avkastningen v\u00e6re? CAPM kobler risiko og avkastning sammen p\u00e5 en presis, matematisk m\u00e5te.",
         "concepts":[
             {"name":"CAPM-formelen",
@@ -977,6 +1113,7 @@ LEARN = {
              "calc":"Beregn CAPM-krav f\u00f8rst, trekk fra faktisk avkastning = alfa."},
         ]},
     "portefolje": {"title":"Portef\u00f8ljeteori",
+        "ref": "Berk & DeMarzo kap. 11 · Brealey/Myers/Allen kap. 7",
         "intro":"Portef\u00f8ljeteori handler om \u00e5 kombinere investeringer smart. Hovedinnsikten: du kan redusere risiko uten \u00e5 ofre avkastning \u2014 bare ved \u00e5 kombinere aksjer som ikke beveger seg helt likt. Harry Markowitz fikk Nobelprisen for dette.",
         "concepts":[
             {"name":"Forventet portef\u00f8ljeavkastning E(rp)",
@@ -996,6 +1133,7 @@ LEARN = {
              "calc":"(Portef\u00f8ljeavkastning \u2212 Rf) \u00f7 standardavvik"},
         ]},
     "wacc": {"title":"Kapitalstruktur & WACC",
+        "ref": "Berk & DeMarzo kap. 12–14 · Brealey/Myers/Allen kap. 17–18",
         "intro":"WACC er den vektede gjennomsnittlige kapitalkostnaden \u2014 hva det koster selskapet \u00e5 finansiere virksomheten. WACC brukes som diskonteringsrente i DCF-verdsettelse, og er derfor direkte koblet til selskapsverdien.",
         "concepts":[
             {"name":"WACC \u2014 Vektet kapitalkostnad",
@@ -1010,6 +1148,7 @@ LEARN = {
              "calc":"VU + skattesats \u00d7 gjeld = verdi bel\u00e5nt selskap"},
         ]},
     "oblig": {"title":"Obligasjoner & aksjer",
+        "ref": "Berk & DeMarzo kap. 6–7 · Brealey/Myers/Allen kap. 3–4",
         "intro":"En obligasjon er et l\u00e5n med faste kuponger. Obligasjonsprisen er n\u00e5verdien av alle fremtidige kontantstr\u00f8mmer \u2014 kuponger pluss tilbakebetaling av p\u00e5lydende. Forst\u00e5r du tidsverdi, forst\u00e5r du obligasjoner.",
         "concepts":[
             {"name":"Obligasjonsprising",
@@ -1024,6 +1163,7 @@ LEARN = {
              "calc":"D\u2080 \u00d7 (1+g) = D\u2081 \u2192 D\u2081 \u00f7 (r \u2212 g) = aksjepris"},
         ]},
     "lan": {"title":"L\u00e5n",
+        "ref": "Berk & DeMarzo kap. 4–5 · Brealey/Myers/Allen kap. 2",
         "intro":"L\u00e5n er noe de fleste m\u00f8ter \u2014 boligl\u00e5n, bill\u00e5n, studiel\u00e5n. Kjerneforskjellen mellom de to hovedtypene er enkel: Annuitetsl\u00e5n har konstant terminbel\u00f8p, seriel\u00e5n har konstant avdrag. Begge testes jevnlig p\u00e5 eksamen.",
         "concepts":[
             {"name":"Annuitetsl\u00e5n",
@@ -1038,6 +1178,7 @@ LEARN = {
              "calc":"Manuelt: avdrag = l\u00e5n\u00f7n. Rente = restgjeld\u00d7r. PMT = avdrag+rente."},
         ]},
     "invest": {"title":"Investeringsanalyse",
+        "ref": "Berk & DeMarzo kap. 8–9 · Brealey/Myers/Allen kap. 5–6",
         "intro":"Investeringsanalyse handler om \u00e5 verdsette selskaper gjennom diskontert kontantstr\u00f8m (DCF). Kjernen: estimer fri kontantstr\u00f8m (FCF), diskont\u00e9r med WACC. Terminalverdien dominerer vanligvis \u2014 70-80 % av total verdi.",
         "concepts":[
             {"name":"Fri kontantstr\u00f8m (FCF)",
@@ -1332,7 +1473,23 @@ with tabs[1]:
     content = LEARN.get(tid)
     if content:
         st.markdown(f"## {content['title']}")
-        st.markdown(f"*{content['intro']}*")
+        if content.get("ref"):
+            st.markdown(f'<p class="meta">📖 {tr("textbook_ref")}: {content["ref"]}</p>', unsafe_allow_html=True)
+        # Show topic insight if available
+        insight = RESOURCES.get("topic_insights", {}).get(tid)
+        if insight:
+            st.markdown(f"*{content['intro']}*")
+            with st.expander(f"🔍 {insight.get('why_it_matters', '')[:50]}...", expanded=False):
+                st.markdown(f"**Hvorfor dette er viktig:** {insight['why_it_matters']}")
+                st.markdown(f"**I praksis:** {insight['real_world']}")
+                st.markdown(f"**Akademisk bakgrunn:** {insight['key_thinkers']}")
+                st.markdown(f"**Eksamensvekt:** {insight['exam_weight']}")
+                if insight.get("connects_to"):
+                    connected = [topic_by_id(c)["name"] for c in insight["connects_to"] if topic_by_id(c)]
+                    if connected:
+                        st.markdown(f"**{tr('cross_ref')}:** {', '.join(connected)}")
+        else:
+            st.markdown(f"*{content['intro']}*")
         # Charts with explanatory text
         for chart_item in CHARTS.get(tid, []):
             cfn, explanation = chart_item
@@ -1759,3 +1916,76 @@ with tabs[8]:
     st.code("Annuitet: N=3, I/YR=6, PV=300000, FV=0 → PMT = −112 297")
     st.code("YTM: N=4, PV=−932255, PMT=50000, FV=1000000 → I/YR = ?")
     st.info(tr("calc_sign_note"))
+
+# ─── RESSURSER ──────────────────────────────────────────────────────────────
+
+with tabs[9]:
+    st.markdown(f"### {tr('resources_title')}")
+    st.markdown(f"*{tr('resources_intro')}*")
+
+    # ── Fagkart: Visuell oversikt over temaene og hvordan de henger sammen ──
+    st.markdown("---")
+    st.markdown("### 🗺️ Fagkart — Slik henger BØK 3423 sammen")
+    st.markdown("*Temaene bygger på hverandre. Start fra toppen og jobb deg nedover.*")
+
+    for item in sorted(RESOURCES["concepts_overview"], key=lambda x: x["order"]):
+        level_bar = "█" * item["order"] + "░" * (6 - item["order"])
+        st.markdown(
+            f'<div style="border-left:4px solid {item["color"]};padding:0.75rem 1rem;margin:0.5rem 0;">'
+            f'<strong style="color:{item["color"]}">{item["topic"]}</strong>'
+            f'<span class="meta" style="margin-left:1rem;">{item["level"]} · {level_bar}</span><br>'
+            f'<span style="font-size:0.9rem;">{item["summary"]}</span>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+    # ── Pensumbøker med kapittelreferanser per tema ──
+    st.markdown("---")
+    st.markdown(f"### {tr('textbook_section')}")
+
+    for book in RESOURCES["textbooks"]:
+        st.markdown(f'<h4 style="color:{book["color"]};margin-bottom:0.5rem;">{book["title"]}</h4>', unsafe_allow_html=True)
+        st.caption(book["role"])
+        for t in TOPICS:
+            ch = book["chapters"].get(t["id"], "")
+            if ch:
+                st.markdown(f'<div class="topic-item" style="border-left:3px solid {book["color"]};">'
+                           f'<strong>{t["name"]}</strong><br>'
+                           f'<span class="meta">{ch}</span></div>', unsafe_allow_html=True)
+        st.markdown("")
+
+    # ── Akademisk bakgrunn per tema ──
+    st.markdown("---")
+    st.markdown(f"### {tr('academic_section')}")
+    st.markdown("*Nøkkelpersonene og teoriene bak hvert tema.*")
+
+    for t in TOPICS:
+        insight = RESOURCES.get("topic_insights", {}).get(t["id"])
+        if insight:
+            with st.expander(f"🎓 {t['name']}"):
+                st.markdown(f"**Akademisk bakgrunn:** {insight['key_thinkers']}")
+                st.markdown(f"**Hvorfor dette er viktig:** {insight['why_it_matters']}")
+                st.markdown(f"**Praktisk relevans:** {insight['real_world']}")
+                st.markdown(f"**Eksamensvekt:** {insight['exam_weight']}")
+                if insight.get("connects_to"):
+                    connected = [topic_by_id(c)["name"] for c in insight["connects_to"] if topic_by_id(c)]
+                    if connected:
+                        st.markdown(f"**{tr('cross_ref')}:** {', '.join(connected)}")
+
+    # ── Nøkkelformler — visuell oversikt ──
+    st.markdown("---")
+    st.markdown("### 🧮 Nøkkelformler — Rask oversikt")
+    st.markdown("*De viktigste formlene du MÅ kunne til eksamen, organisert etter tema.*")
+
+    for g in ALL_FORMULAS:
+        st.markdown(f'<h4 style="color:{g["color"]};margin-top:1.5rem;margin-bottom:0.5rem;">{g["group"]}</h4>', unsafe_allow_html=True)
+        for f, e, n in g["formulas"]:
+            st.markdown(
+                f'<div style="display:flex;justify-content:space-between;align-items:center;'
+                f'padding:0.5rem 0;border-bottom:1px solid var(--border,#1e293b);">'
+                f'<span style="font-weight:600;">{f}</span>'
+                f'<span style="font-family:monospace;color:{g["color"]}">{e}</span>'
+                f'<span class="meta" style="min-width:120px;text-align:right;">{n}</span>'
+                f'</div>',
+                unsafe_allow_html=True
+            )
