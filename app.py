@@ -20,6 +20,14 @@ from datetime import date, datetime
 
 st.set_page_config(page_title="BØK 3423 Eksamenstrener", page_icon="🎓", layout="wide")
 
+# ─── THEME TOGGLE ───────────────────────────────────────────────────────────
+if "theme" not in st.session_state:
+    st.session_state.theme = "Mørkt"
+with st.sidebar:
+    st.markdown("### Innstillinger")
+    _light = st.toggle("Lyst tema", value=(st.session_state.theme == "Lyst"))
+    st.session_state.theme = "Lyst" if _light else "Mørkt"
+
 # ─── CUSTOM CSS ──────────────────────────────────────────────────────────────
 
 st.markdown("""
@@ -176,6 +184,90 @@ st.markdown("""
     .stRadio label span { color: #d4d4d8 !important; }
 </style>
 """, unsafe_allow_html=True)
+
+# ─── LIGHT THEME OVERRIDE ───────────────────────────────────────────────────
+if st.session_state.theme == "Lyst":
+    st.markdown("""<style>
+    .stApp { background-color: #ffffff !important; color: #1a1a1a !important; }
+    section[data-testid="stSidebar"] { background-color: #f8f9fa !important; }
+
+    h1,h2,h3,h4,h5,h6,p,li,span,label,.stMarkdown,
+    .stSelectbox label,.stTextInput label,.stNumberInput label,
+    .stTextArea label,.stRadio label { color: #1a1a1a !important; }
+    p, li { color: #4b5563 !important; }
+
+    .meta { color: #6b7280 !important; }
+    .days-number { color: #111827 !important; }
+    .days-label { color: #6b7280 !important; }
+
+    .top-progress { background: #e5e7eb !important; }
+
+    .stButton > button {
+        background: #ffffff !important; border-color: #d1d5db !important; color: #1a1a1a !important;
+    }
+    .stButton > button:hover { border-color: #9ca3af !important; background: #f3f4f6 !important; }
+
+    .formula-block { border-top-color: #e5e7eb !important; border-left-color: #3b82f6 !important; }
+    .formula-label { color: #6b7280 !important; }
+    .formula-text { color: #2563eb !important; }
+    .formula-note { color: #6b7280 !important; }
+
+    .feedback-correct { background: #f0fdf4 !important; border-left-color: #16a34a !important; color: #1a1a1a !important; }
+    .feedback-wrong { background: #fef2f2 !important; border-left-color: #dc2626 !important; color: #1a1a1a !important; }
+    .feedback-insight { background: #eef2ff !important; border-left-color: #6366f1 !important; color: #374151 !important; }
+    .feedback-warn { background: #fffbeb !important; border-left-color: #d97706 !important; color: #374151 !important; }
+
+    .calc-step { color: #92400e !important; background: #fffbeb !important; }
+    .solve-step { border-bottom-color: #e5e7eb !important; color: #374151 !important; }
+    .result-display { color: #16a34a !important; border-color: #e5e7eb !important; }
+
+    .msg-ai { border-bottom-color: #e5e7eb !important; color: #374151 !important; }
+    .msg-user { border-bottom-color: #e5e7eb !important; color: #1a1a1a !important; }
+
+    .topic-item { border-bottom-color: #e5e7eb !important; }
+    .topic-item:hover { background: #f3f4f6 !important; }
+
+    .stTabs [data-baseweb="tab-list"] { border-bottom-color: #e5e7eb !important; background: #ffffff !important; }
+    .stTabs [data-baseweb="tab"] { color: #6b7280 !important; }
+    .stTabs [aria-selected="true"] { color: #111827 !important; border-bottom-color: #111827 !important; }
+
+    .stExpander { border-bottom-color: #e5e7eb !important; }
+    .stExpander > details > summary { color: #1a1a1a !important; }
+
+    .stProgress > div > div { background-color: #e5e7eb !important; }
+
+    [data-testid="stMetricValue"] { color: #111827 !important; }
+    [data-testid="stMetricLabel"] { color: #6b7280 !important; }
+
+    .stSelectbox > div > div { background-color: #f9fafb !important; color: #1a1a1a !important; border-color: #d1d5db !important; }
+    .stSelectbox > div > div > div { color: #1a1a1a !important; }
+    .stSelectbox > div > div > div > div { color: #1a1a1a !important; }
+    .stSelectbox svg { fill: #1a1a1a !important; }
+    [data-baseweb="select"] { background-color: #f9fafb !important; }
+    [data-baseweb="select"] * { color: #1a1a1a !important; }
+    [data-baseweb="popover"] { background-color: #ffffff !important; border-color: #d1d5db !important; }
+    [data-baseweb="popover"] * { color: #1a1a1a !important; }
+    [data-baseweb="menu"] { background-color: #ffffff !important; }
+    [data-baseweb="menu"] * { color: #1a1a1a !important; }
+    [data-baseweb="menu"] li { color: #1a1a1a !important; background-color: #ffffff !important; }
+    [data-baseweb="menu"] li:hover { background-color: #f3f4f6 !important; }
+    [data-baseweb="menu"] li[aria-selected="true"] { background-color: #f3f4f6 !important; }
+    [role="listbox"] { background-color: #ffffff !important; }
+    [role="listbox"] * { color: #1a1a1a !important; }
+    [role="option"] { color: #1a1a1a !important; background-color: #ffffff !important; }
+    [role="option"]:hover { background-color: #f3f4f6 !important; }
+
+    .stTextInput > div > div > input { background-color: #f9fafb !important; color: #1a1a1a !important; border-color: #d1d5db !important; }
+    .stNumberInput > div > div > input { background-color: #f9fafb !important; color: #1a1a1a !important; border-color: #d1d5db !important; }
+    .stTextArea > div > div > textarea { background-color: #f9fafb !important; color: #1a1a1a !important; border-color: #d1d5db !important; }
+
+    .stRadio > div { color: #1a1a1a !important; }
+    .stRadio label span { color: #4b5563 !important; }
+
+    .stChatInput > div { background-color: #f9fafb !important; border-color: #d1d5db !important; }
+    .stChatInput textarea { color: #1a1a1a !important; }
+    .stChatMessage { background-color: #f9fafb !important; }
+    </style>""", unsafe_allow_html=True)
 
 # ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -509,14 +601,24 @@ QUESTION_BANK = {
 
 # ─── VISUAL CHARTS ───────────────────────────────────────────────────────────
 
-CT = dict(template="plotly_dark", paper_bgcolor="#0b0f19", plot_bgcolor="#111827",
-    font=dict(color="#f0f0f0", size=13),
-    title_font=dict(color="#f0f0f0", size=14),
-    legend=dict(font=dict(color="#f0f0f0", size=12)),
-    xaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
-    yaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
-    margin=dict(l=40, r=20, t=40, b=40),
-)
+if st.session_state.theme == "Lyst":
+    CT = dict(template="plotly_white", paper_bgcolor="#ffffff", plot_bgcolor="#f9fafb",
+        font=dict(color="#1a1a1a", size=13),
+        title_font=dict(color="#1a1a1a", size=14),
+        legend=dict(font=dict(color="#1a1a1a", size=12)),
+        xaxis=dict(color="#1a1a1a", tickfont=dict(color="#6b7280"), title_font=dict(color="#374151"), gridcolor="#e5e7eb"),
+        yaxis=dict(color="#1a1a1a", tickfont=dict(color="#6b7280"), title_font=dict(color="#374151"), gridcolor="#e5e7eb"),
+        margin=dict(l=40, r=20, t=40, b=40),
+    )
+else:
+    CT = dict(template="plotly_dark", paper_bgcolor="#0b0f19", plot_bgcolor="#111827",
+        font=dict(color="#f0f0f0", size=13),
+        title_font=dict(color="#f0f0f0", size=14),
+        legend=dict(font=dict(color="#f0f0f0", size=12)),
+        xaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
+        yaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
+        margin=dict(l=40, r=20, t=40, b=40),
+    )
 
 def chart_tidsverdi():
     years = list(range(0, 31))
@@ -611,6 +713,95 @@ CHARTS = {
     "invest": [
         (chart_fcf, "Waterfall-diagrammet viser steg for steg hvordan du kommer fra EBIT til fri kontantstrøm (FCF). Du starter med EBIT (500 000), trekker fra skatt for å få NOPAT, legger tilbake avskrivninger (fordi de ikke er en reell utbetaling), og trekker fra CAPEX og endring i arbeidskapital. Resultatet — FCF = 400 000 — er de faktiske pengene selskapet har tilgjengelig for aksjonærer og kreditorer."),
     ],
+}
+
+# ─── EXTERNAL RESOURCES (embedded in Lær tab) ───────────────────────────────
+
+EXTERNAL_RESOURCES = {
+    "tidsverdi": {
+        "title": "Fordyp deg — Pengenes tidsverdi",
+        "summary": "Tidsverdi er grunnmuren i finans. Disse ressursene gir alternative forklaringer og flere eksempler.",
+        "resources": [
+            {"name": "Investopedia: Time Value of Money", "url": "https://www.investopedia.com/terms/t/timevalueofmoney.asp", "desc": "Grundig gjennomgang av TVM med eksempler og formler (engelsk)"},
+            {"name": "Investopedia: Net Present Value (NPV)", "url": "https://www.investopedia.com/terms/n/npv.asp", "desc": "NPV forklart steg for steg med beregningseksempler"},
+            {"name": "Investopedia: Internal Rate of Return", "url": "https://www.investopedia.com/terms/i/irr.asp", "desc": "IRR vs NPV — når de gir ulike svar og hvilken du skal stole på"},
+            {"name": "Investopedia: Annuity", "url": "https://www.investopedia.com/terms/a/annuity.asp", "desc": "Annuiteter forklart med formler og kalkulatoreksempler"},
+            {"name": "Investopedia: Perpetuity", "url": "https://www.investopedia.com/terms/p/perpetuity.asp", "desc": "Perpetuitet — den enkleste formelen i faget, men brukes overalt"},
+        ],
+        "exam_tips": "TVM testes i nesten ALLE oppgaver. Sørg for at du mestrer PV, FV, annuitet og NPV før noe annet. Øv spesielt på å skille mellom enkel rente og rentes rente.",
+        "real_world": "Banker bruker TVM daglig for å prise lån. Investorer bruker NPV for å vurdere prosjekter. Pensjonsfondet ditt vokser med rentes rente — Einstein kalte det verdens åttende underverk.",
+    },
+    "capm": {
+        "title": "Fordyp deg — CAPM & SML",
+        "summary": "CAPM er en av de mest testede modellene i BØK 3423. Forstå den fra flere vinkler.",
+        "resources": [
+            {"name": "Investopedia: Capital Asset Pricing Model", "url": "https://www.investopedia.com/terms/c/capm.asp", "desc": "Full gjennomgang av CAPM med eksempler og begrensninger"},
+            {"name": "Investopedia: Beta", "url": "https://www.investopedia.com/terms/b/beta.asp", "desc": "Beta — systematisk vs usystematisk risiko forklart"},
+            {"name": "Investopedia: Security Market Line", "url": "https://www.investopedia.com/terms/s/sml.asp", "desc": "SML-grafen: aksjer over/under linjen og hva det betyr"},
+            {"name": "Investopedia: Jensen's Alpha", "url": "https://www.investopedia.com/terms/j/jensensmeasure.asp", "desc": "Jensens alfa — har fondsforvalteren slått markedet?"},
+        ],
+        "exam_tips": "CAPM dukker opp i nesten alle eksamener. Klassisk feil: ganger beta med Rm i stedet for markedspremien (Rm−Rf). Og husk: OVER SML = UNDER priset.",
+        "real_world": "Bloomberg-terminaler viser beta for alle børsnoterte aksjer. Analytikere bruker CAPM daglig for å sette avkastningskrav i verdsettelser.",
+    },
+    "portefolje": {
+        "title": "Fordyp deg — Porteføljeteori",
+        "summary": "Markowitz' porteføljeteori er Nobel-vinnende innsikt om diversifisering. Forstå matematikken bak.",
+        "resources": [
+            {"name": "Investopedia: Modern Portfolio Theory", "url": "https://www.investopedia.com/terms/m/modernportfoliotheory.asp", "desc": "MPT — effisient front, optimal portefølje og Markowitz' bidrag"},
+            {"name": "Investopedia: Sharpe Ratio", "url": "https://www.investopedia.com/terms/s/sharperatio.asp", "desc": "Sharpe-ratio — rangering av porteføljer etter risikojustert avkastning"},
+            {"name": "Investopedia: Diversification", "url": "https://www.investopedia.com/terms/d/diversification.asp", "desc": "Hvorfor og hvordan diversifisering reduserer risiko uten å ofre avkastning"},
+            {"name": "Investopedia: Correlation", "url": "https://www.investopedia.com/terms/c/correlation.asp", "desc": "Korrelasjon — nøkkelen til diversifiseringseffekten"},
+        ],
+        "exam_tips": "Porteføljevarians med to aktiva: GLEM ALDRI det tredje leddet (2w₁w₂ρσ₁σ₂). Regn hvert ledd separat, summér, og ta kvadratroten.",
+        "real_world": "Norges Bank Investment Management (oljefondet) bruker MPT for å diversifisere over 9 000 selskaper i 70 land. Sharpe-ratio er standarden for å evaluere fondsforvaltere.",
+    },
+    "wacc": {
+        "title": "Fordyp deg — Kapitalstruktur & WACC",
+        "summary": "WACC kobler finansiering og verdsettelse. Forstå skatteskjoldet og kapitalstrukturens rolle.",
+        "resources": [
+            {"name": "Investopedia: WACC", "url": "https://www.investopedia.com/terms/w/wacc.asp", "desc": "WACC steg for steg med beregningseksempler og tolkning"},
+            {"name": "Investopedia: Modigliani-Miller Theorem", "url": "https://www.investopedia.com/terms/m/modigliani-millertheorem.asp", "desc": "MM proposisjonene — med og uten skatt, og hva de betyr i praksis"},
+            {"name": "Investopedia: Cost of Equity", "url": "https://www.investopedia.com/terms/c/costofequity.asp", "desc": "EK-kostnad via CAPM og dividendemodellen — to veier til samme svar"},
+            {"name": "Investopedia: Tax Shield", "url": "https://www.investopedia.com/terms/t/taxshield.asp", "desc": "Skatteskjoldet — hvorfor gjeld kan øke selskapsverdien"},
+        ],
+        "exam_tips": "ALLTID (1−T) på gjeldskostnaden i WACC. Glemmer du det, er svaret garantert feil. Bruk markedsverdier for E og D, ikke bokførte verdier.",
+        "real_world": "Når DNB eller Pareto priser en bedrift for oppkjøp, starter de med WACC som diskonteringsrente i DCF-analysen. WACC er bindeleddet mellom kapitalstruktur og verdi.",
+    },
+    "oblig": {
+        "title": "Fordyp deg — Obligasjoner & aksjer",
+        "summary": "Obligasjonsprising er direkte anvendelse av tidsverdi. Aksjeprising via Gordon-modellen.",
+        "resources": [
+            {"name": "Investopedia: Bond Valuation", "url": "https://www.investopedia.com/terms/b/bond-valuation.asp", "desc": "Obligasjonsprising — kupong, YTM og sammenhengen mellom pris og rente"},
+            {"name": "Investopedia: Yield to Maturity", "url": "https://www.investopedia.com/terms/y/yieldtomaturity.asp", "desc": "YTM (effektiv rente) — hva den forteller deg om obligasjonen"},
+            {"name": "Investopedia: Gordon Growth Model", "url": "https://www.investopedia.com/terms/g/gordongrowthmodel.asp", "desc": "Aksjeprising med konstant dividendevekst — forutsetninger og begrensninger"},
+            {"name": "Investopedia: Par Value", "url": "https://www.investopedia.com/terms/p/parvalue.asp", "desc": "Par/underkurs/overkurs — når handles obligasjoner til hva?"},
+        ],
+        "exam_tips": "Glem ALDRI PV av pålydende ved obligasjonsprising! Og i Gordon: D₁ er NESTE dividende. Har du D₀, beregn D₁ = D₀ × (1+g) først.",
+        "real_world": "Norges statsobligasjoner prises med disse metodene. Oslo Børs viser kupong og YTM. Equinor-aksjen kan verdsettes med Gordon-modellen basert på stabil dividendevekst.",
+    },
+    "lan": {
+        "title": "Fordyp deg — Lån",
+        "summary": "Lån er den mest praktiske delen av pensum — de fleste vil ta opp boliglån i løpet av livet.",
+        "resources": [
+            {"name": "Investopedia: Amortization", "url": "https://www.investopedia.com/terms/a/amortization.asp", "desc": "Annuitetslån — hvordan terminbeløp, rente og avdrag henger sammen"},
+            {"name": "Investopedia: Mortgage Calculator", "url": "https://www.investopedia.com/mortgage-calculator-5084794", "desc": "Interaktiv lånekalkulator — prøv med ulike renter og løpetider"},
+            {"name": "Investopedia: Interest Rate", "url": "https://www.investopedia.com/terms/i/interestrate.asp", "desc": "Nominell vs effektiv rente — konvertering mellom månedlig og årlig"},
+        ],
+        "exam_tips": "Serielån løses best med tabell (Restgjeld → Rente → Avdrag → PMT). Annuitetslån med kalkulator. Ved månedlige terminer: r = årsrente/12 og n = år × 12.",
+        "real_world": "De fleste norske boliglån er annuitetslån. Forskjellen mellom serie og annuitet kan utgjøre hundretusener i total rentekostnad over 25 år.",
+    },
+    "invest": {
+        "title": "Fordyp deg — Investeringsanalyse",
+        "summary": "DCF-verdsettelse er den mest brukte metoden i profesjonell finans. Mestre FCF og terminalverdi.",
+        "resources": [
+            {"name": "Investopedia: Free Cash Flow", "url": "https://www.investopedia.com/terms/f/freecashflow.asp", "desc": "FCF — de faktiske pengene selskapet genererer etter drift og investering"},
+            {"name": "Investopedia: DCF Analysis", "url": "https://www.investopedia.com/terms/d/dcf.asp", "desc": "Diskontert kontantstrøm — steg for steg fra FCF til selskapsverdi"},
+            {"name": "Investopedia: Terminal Value", "url": "https://www.investopedia.com/terms/t/terminalvalue.asp", "desc": "Terminalverdi — hvorfor 70-80% av selskapsverdien ofte ligger her"},
+            {"name": "Investopedia: CAPEX", "url": "https://www.investopedia.com/terms/c/capitalexpenditure.asp", "desc": "CAPEX vs OPEX — hva som hører hvor i FCF-beregningen"},
+        ],
+        "exam_tips": "Start ALLTID fra EBIT, aldri nettoresultat (som inkluderer renter som allerede er i WACC). Avskrivninger legges tilbake fordi de ikke er kontante.",
+        "real_world": "McKinsey, Goldman Sachs og norske meglerhus bruker DCF som primærmetode for verdsettelse. Terminalverdi er alltid den mest sensitive antakelsen.",
+    },
 }
 
 # ─── FORMLER ─────────────────────────────────────────────────────────────────
@@ -1003,6 +1194,12 @@ with tabs[1]:
     st.session_state.learn_topic = learn_tid
     st.session_state.learn_sub = learn_sub_sel if learn_sub_sel != "Alle konsepter" else None
 
+    # Scroll til toppen av innholdet når undertema endres
+    if learn_sub_sel != "Alle konsepter":
+        st.components.v1.html("""<script>
+            window.parent.document.querySelector('section.main').scrollTo({top: 0, behavior: 'smooth'});
+        </script>""", height=0)
+
     topic = learn_topic_obj
     tid = learn_tid
     st.markdown("---")
@@ -1055,6 +1252,26 @@ with tabs[1]:
                 st.markdown("")
             if st.button("🔄 Nye spørsmål", key=f"ln_{tid}"):
                 st.session_state[qk] = random.sample(range(len(bank)), min(2, len(bank))); st.rerun()
+
+    # ── Fordyp deg — Eksterne ressurser innebygd i appen ──
+    ext = EXTERNAL_RESOURCES.get(tid)
+    if ext:
+        st.markdown("---")
+        st.markdown(f"### {ext['title']}")
+        st.caption(ext["summary"])
+
+        if ext.get("exam_tips"):
+            st.markdown(f'<div class="feedback-warn"><strong>Eksamensfokus:</strong> {ext["exam_tips"]}</div>', unsafe_allow_html=True)
+
+        if ext.get("real_world"):
+            st.markdown(f'<div class="feedback-insight"><strong>I praksis:</strong> {ext["real_world"]}</div>', unsafe_allow_html=True)
+
+        st.markdown("#### Anbefalte ressurser")
+        st.caption("Artiklene åpnes i nettleseren. Bruk dem som supplement til pensum.")
+        for ri, r in enumerate(ext.get("resources", [])):
+            with st.expander(f"{r['name']}"):
+                st.markdown(r["desc"])
+                st.link_button("Les artikkel", r["url"])
 
 # ─── OPPGAVER ────────────────────────────────────────────────────────────────
 
