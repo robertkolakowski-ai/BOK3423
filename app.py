@@ -20,162 +20,459 @@ from datetime import date, datetime
 
 st.set_page_config(page_title="BØK 3423 Eksamenstrener", page_icon="🎓", layout="wide")
 
+# ─── LANGUAGE ────────────────────────────────────────────────────────────────
+
+LANG = {
+    "no": {
+        "app_title": "BØK 3423 Eksamenstrener",
+        "tabs": ["Hjem", "Lær", "Oppgaver", "Smart økt", "AI-trener", "Formler", "Chat", "Fremgang", "Kalkulator"],
+        "days_to_exam": "dager til eksamen · 1. juni 2026",
+        "focus_build": "Fokus: Forstå konseptene. Bruk Lær-fanen og AI-treneren med «Forklar tilbake».",
+        "focus_mix": "Fokus: Bland temaer! Bruk Smart økt for interleaving. Beregningsoppgaver med kalkulator.",
+        "focus_repeat": "Fokus: Repeter svake temaer. Eksamensimulering. Flervalg under tidspress.",
+        "focus_intense": "SISTE UKE: Kun eksamensimulering og formler. Du kan dette!",
+        "topics_progress": "temaer",
+        "points": "Poeng ⚡",
+        "recommended_today": "Anbefalt i dag",
+        "not_practiced": "Ikke øvd",
+        "api_key_label": "🔑 API-nøkkel",
+        "api_key_input": "Anthropic API-nøkkel",
+        "api_key_saved": "Lagret!",
+        "learn": "Lær",
+        "topic": "Tema",
+        "subtopic": "Undertema",
+        "all_concepts": "Alle konsepter",
+        "key_concepts": "Nøkkelkonsepter",
+        "test_yourself": "Test deg selv",
+        "new_questions": "🔄 Nye spørsmål",
+        "exercises": "Oppgaver",
+        "type": "Type",
+        "multiple_choice": "Flervalg",
+        "calculation": "Beregning",
+        "case": "Case",
+        "adaptive_difficulty": "Adaptiv vanskelighetsgrad",
+        "no_exercises": "Ingen oppgaver her ennå. Prøv AI-treneren!",
+        "question": "Spørsmål",
+        "score": "Score",
+        "done": "Ferdig!",
+        "again": "🔄 Igjen",
+        "next": "➡️ Neste",
+        "check": "✅ Sjekk",
+        "solution": "💡 Løsning",
+        "your_answer": "Ditt svar:",
+        "answer_label": "Skriv svar eller tall...",
+        "correct": "Riktig!",
+        "all_done": "Alle oppgaver fullført!",
+        "exercise_label": "Oppgave",
+        "formula_label": "Formel",
+        "no_cases": "Ingen case-oppgaver.",
+        "case_exam": "Case — Eksamensformat",
+        "answer_key": "💡 Fasit",
+        "next_case": "➡️ Neste case",
+        "smart_session": "🧠 Smart økt — Interleaved trening",
+        "smart_caption": "Blander temaer bevisst for bedre langtidshukommelse. Tilpasser seg ditt nivå.",
+        "smart_build_tip": "📖 Fokus nå: Forstå konseptene først (Lær-fanen). Smart økt er mest effektiv etter du har sett temaene.",
+        "smart_questions": "10 spørsmål, blandet fra alle temaer.",
+        "estimated_time": "Estimert tid",
+        "start_smart": "▶ Start smart økt",
+        "per_topic": "Per tema:",
+        "new_smart": "🔄 Ny smart økt",
+        "ai_trainer": "AI-trener",
+        "chosen_by_ai": "Velges av AI",
+        "mode": "Modus",
+        "difficulty_levels": ["Grunnleggende", "Middels", "Avansert"],
+        "start_mode": "▶ Start",
+        "enter_api_key": "Legg inn API-nøkkel på Hjem-fanen.",
+        "loading": "Henter oppgave...",
+        "api_error": "API-feil",
+        "choose_answer": "Velg svar:",
+        "correct_btn": "✅ Riktig +15",
+        "hint_btn": "❓ Hint",
+        "new_exercise_btn": "⏭ Ny oppgave",
+        "explain_btn": "💡 Forklar",
+        "reset": "🔄 Nullstill",
+        "formulas_title": "Formler",
+        "search_formulas": "Søk formler...",
+        "chat_title": "💬 Fri chat",
+        "chat_input": "Spør...",
+        "clear_chat": "🗑 Tøm",
+        "progress_title": "📊 Fremgang",
+        "sessions_label": "Økter 📚",
+        "days_label": "Dager 📅",
+        "topics_development": "Temaer — din utvikling",
+        "improvement_over_time": "📈 Forbedring over tid",
+        "practice_more": "— øv mer!",
+        "stable_at": "Stabilt",
+        "calculator_title": "🔢 HP 10bII+ Kalkulator",
+        "calculator_caption": "La feltet stå tomt for ukjent.",
+        "calculate": "▶ Beregn",
+        "examples": "Eksempler:",
+        "calc_sign_note": "Negativ = utbetaling fra deg. Positiv = innbetaling.",
+        "exactly_one_empty": "Nøyaktig ett felt tomt.",
+        "invalid_number": "Ugyldig tall.",
+        "no_solution": "Ingen løsning.",
+        "settings": "⚙️ Innstillinger",
+        "theme_label": "Utseende",
+        "theme_dark": "Mørkt",
+        "theme_light": "Lyst",
+        "language_label": "Språk",
+        "phase_build": "Bygg forståelse 📖",
+        "phase_mix": "Blandet øving 📐",
+        "phase_repeat": "Repetisjon ⏩",
+        "phase_intense": "INTENSIV 🔥",
+        "ai_correct_msg": "Jeg svarte riktig.",
+        "ai_hint_msg": "Gi meg et hint — men ikke svaret.",
+        "ai_new_msg": "Ny oppgave, gjerne annet undertema.",
+        "ai_explain_msg": "Forklar løsningen grundig med intuisjon og kalkulatorsteg.",
+        "ai_system_full": """Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk.
+
+PEDAGOGISKE REGLER:
+1. Gi ALDRI fasit før studenten har prøvd — still spørsmål, vent, evaluer.
+2. Forklar ALLTID intuisjonen (HVORFOR) før formelen (HVORDAN).
+3. Ved feil: forklar nøyaktig hva studenten misforsto, ikke bare si "feil".
+4. Vis HP 10bII+ tastetrykk for alle beregninger.
+5. Bruk eksamensformat: tabeller, realistiske tall, BI-språk.
+6. Avslutt alltid med ett konkret spørsmål til studenten.
+7. Riktig svar: «Riktig — og dette er akkurat det eksamen tester. [kort forklaring av hvorfor]»
+8. Feil svar: «Nesten — de fleste gjør denne feilen fordi [konkret årsak]. Prøv igjen med dette hintet: [hint]»""",
+        "ai_system_short": "Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk. Gi aldri fasit direkte. Forklar intuisjon først. Vis HP 10bII+ tastetrykk. Behandle feil som læringsmomenter. Avslutt med neste spørsmål.",
+        "chat_system": "Du er finanstutor for BØK 3423 Finans (BI). Norsk. Direkte. Bruk formler, eksempler og HP 10bII+ tastetrykk.",
+        "chat_suggestions": ["Forklar CAPM", "IRR vs NPV?", "WACC steg for steg", "Gordon Growth?", "MM med/uten skatt", "Sharpe vs beta"],
+        "diff_instructions": [
+            "Bruk enkle tall og ett steg om gangen.",
+            "Bruk realistiske eksamenstall.",
+            "Bruk komplekse oppgaver med flere steg og tidspress.",
+        ],
+    },
+    "en": {
+        "app_title": "BØK 3423 Exam Trainer",
+        "tabs": ["Home", "Learn", "Exercises", "Smart Session", "AI Trainer", "Formulas", "Chat", "Progress", "Calculator"],
+        "days_to_exam": "days until exam · June 1, 2026",
+        "focus_build": "Focus: Understand the concepts. Use the Learn tab and AI trainer with 'Explain back'.",
+        "focus_mix": "Focus: Mix topics! Use Smart session for interleaving. Calculation exercises with calculator.",
+        "focus_repeat": "Focus: Review weak topics. Exam simulation. Multiple choice under time pressure.",
+        "focus_intense": "FINAL WEEK: Only exam simulation and formulas. You've got this!",
+        "topics_progress": "topics",
+        "points": "Points ⚡",
+        "recommended_today": "Recommended today",
+        "not_practiced": "Not practiced",
+        "api_key_label": "🔑 API Key",
+        "api_key_input": "Anthropic API Key",
+        "api_key_saved": "Saved!",
+        "learn": "Learn",
+        "topic": "Topic",
+        "subtopic": "Subtopic",
+        "all_concepts": "All concepts",
+        "key_concepts": "Key concepts",
+        "test_yourself": "Test yourself",
+        "new_questions": "🔄 New questions",
+        "exercises": "Exercises",
+        "type": "Type",
+        "multiple_choice": "Multiple choice",
+        "calculation": "Calculation",
+        "case": "Case",
+        "adaptive_difficulty": "Adaptive difficulty",
+        "no_exercises": "No exercises here yet. Try the AI trainer!",
+        "question": "Question",
+        "score": "Score",
+        "done": "Done!",
+        "again": "🔄 Again",
+        "next": "➡️ Next",
+        "check": "✅ Check",
+        "solution": "💡 Solution",
+        "your_answer": "Your answer:",
+        "answer_label": "Type answer or number...",
+        "correct": "Correct!",
+        "all_done": "All exercises completed!",
+        "exercise_label": "Exercise",
+        "formula_label": "Formula",
+        "no_cases": "No case exercises.",
+        "case_exam": "Case — Exam format",
+        "answer_key": "💡 Answer key",
+        "next_case": "➡️ Next case",
+        "smart_session": "🧠 Smart Session — Interleaved training",
+        "smart_caption": "Deliberately mixes topics for better long-term memory. Adapts to your level.",
+        "smart_build_tip": "📖 Focus now: Understand the concepts first (Learn tab). Smart session is most effective after you've seen the topics.",
+        "smart_questions": "10 questions, mixed from all topics.",
+        "estimated_time": "Estimated time",
+        "start_smart": "▶ Start smart session",
+        "per_topic": "Per topic:",
+        "new_smart": "🔄 New smart session",
+        "ai_trainer": "AI Trainer",
+        "chosen_by_ai": "Chosen by AI",
+        "mode": "Mode",
+        "difficulty_levels": ["Basic", "Intermediate", "Advanced"],
+        "start_mode": "▶ Start",
+        "enter_api_key": "Enter API key on the Home tab.",
+        "loading": "Loading exercise...",
+        "api_error": "API error",
+        "choose_answer": "Choose answer:",
+        "correct_btn": "✅ Correct +15",
+        "hint_btn": "❓ Hint",
+        "new_exercise_btn": "⏭ New exercise",
+        "explain_btn": "💡 Explain",
+        "reset": "🔄 Reset",
+        "formulas_title": "Formulas",
+        "search_formulas": "Search formulas...",
+        "chat_title": "💬 Free chat",
+        "chat_input": "Ask...",
+        "clear_chat": "🗑 Clear",
+        "progress_title": "📊 Progress",
+        "sessions_label": "Sessions 📚",
+        "days_label": "Days 📅",
+        "topics_development": "Topics — your development",
+        "improvement_over_time": "📈 Improvement over time",
+        "practice_more": "— practice more!",
+        "stable_at": "Stable at",
+        "calculator_title": "🔢 HP 10bII+ Calculator",
+        "calculator_caption": "Leave field empty for unknown.",
+        "calculate": "▶ Calculate",
+        "examples": "Examples:",
+        "calc_sign_note": "Negative = payment from you. Positive = payment to you.",
+        "exactly_one_empty": "Exactly one field must be empty.",
+        "invalid_number": "Invalid number.",
+        "no_solution": "No solution.",
+        "settings": "⚙️ Settings",
+        "theme_label": "Appearance",
+        "theme_dark": "Dark",
+        "theme_light": "Light",
+        "language_label": "Language",
+        "phase_build": "Build understanding 📖",
+        "phase_mix": "Mixed practice 📐",
+        "phase_repeat": "Repetition ⏩",
+        "phase_intense": "INTENSIVE 🔥",
+        "ai_correct_msg": "I answered correctly.",
+        "ai_hint_msg": "Give me a hint — but not the answer.",
+        "ai_new_msg": "New exercise, preferably different subtopic.",
+        "ai_explain_msg": "Explain the solution thoroughly with intuition and calculator steps.",
+        "ai_system_full": """You are an exam tutor for BØK 3423 Finance at BI Norwegian Business School. Always respond in English.
+
+PEDAGOGICAL RULES:
+1. NEVER give the answer before the student has tried — ask questions, wait, evaluate.
+2. ALWAYS explain the intuition (WHY) before the formula (HOW).
+3. On errors: explain exactly what the student misunderstood, don't just say "wrong".
+4. Show HP 10bII+ keystrokes for all calculations.
+5. Use exam format: tables, realistic numbers.
+6. Always end with one concrete question to the student.
+7. Correct answer: "Correct — and this is exactly what the exam tests. [brief explanation of why]"
+8. Wrong answer: "Almost — most make this mistake because [specific cause]. Try again with this hint: [hint]" """,
+        "ai_system_short": "You are an exam tutor for BØK 3423 Finance at BI. Always respond in English. Never give answers directly. Explain intuition first. Show HP 10bII+ keystrokes. Treat errors as learning moments. End with next question.",
+        "chat_system": "You are a finance tutor for BØK 3423 Finance (BI). English. Direct. Use formulas, examples and HP 10bII+ keystrokes.",
+        "chat_suggestions": ["Explain CAPM", "IRR vs NPV?", "WACC step by step", "Gordon Growth?", "MM with/without tax", "Sharpe vs beta"],
+        "diff_instructions": [
+            "Use simple numbers and one step at a time.",
+            "Use realistic exam numbers.",
+            "Use complex exercises with multiple steps and time pressure.",
+        ],
+    },
+}
+
+def tr(key):
+    """Get translated string for current language."""
+    lang = st.session_state.get("lang", "no")
+    return LANG[lang].get(key, LANG["no"].get(key, key))
+
 # ─── CUSTOM CSS ──────────────────────────────────────────────────────────────
 
-st.markdown("""
-<style>
-    /* ── BASE: Dark, clean, typographic ── */
-    .stApp { background-color: #0b0f19; color: #f0f0f0; }
-    section[data-testid="stSidebar"] { background-color: #0f1420; }
+def get_theme_css():
+    is_dark = st.session_state.get("theme", "dark") == "dark"
+    if is_dark:
+        v = {
+            "bg": "#0b0f19", "bg2": "#0f1420", "bg3": "#111827", "bg_hover": "#18181b",
+            "text": "#f0f0f0", "text2": "#d4d4d8", "muted": "#71717a", "border": "#1e293b",
+            "border2": "#27272a", "border_hover": "#52525b",
+            "formula_color": "#93c5fd", "calc_bg": "#18181b", "calc_color": "#fbbf24",
+            "days_color": "#ffffff", "result_color": "#22c55e",
+            "fb_correct_bg": "#052e1622", "fb_wrong_bg": "#450a0a22",
+            "fb_insight_bg": "#1e1b4b22", "fb_warn_bg": "#451a0322",
+        }
+    else:
+        v = {
+            "bg": "#ffffff", "bg2": "#f8fafc", "bg3": "#f1f5f9", "bg_hover": "#f1f5f9",
+            "text": "#1e293b", "text2": "#334155", "muted": "#64748b", "border": "#e2e8f0",
+            "border2": "#cbd5e1", "border_hover": "#94a3b8",
+            "formula_color": "#2563eb", "calc_bg": "#f8fafc", "calc_color": "#b45309",
+            "days_color": "#0f172a", "result_color": "#16a34a",
+            "fb_correct_bg": "#f0fdf4", "fb_wrong_bg": "#fef2f2",
+            "fb_insight_bg": "#eef2ff", "fb_warn_bg": "#fffbeb",
+        }
+    return f"""<style>
+    /* ── BASE ── */
+    .stApp {{ background-color: {v["bg"]}; color: {v["text"]}; }}
+    section[data-testid="stSidebar"] {{ background-color: {v["bg2"]}; }}
 
-    /* Typography hierarchy — size and weight do all the work */
+    /* Typography */
     h1, h2, h3, h4, h5, h6, p, li, span, label, .stMarkdown,
     .stSelectbox label, .stTextInput label, .stNumberInput label,
-    .stTextArea label, .stRadio label { color: #f0f0f0 !important; }
-    h1 { font-size: 2rem !important; font-weight: 700 !important; letter-spacing: -0.5px; margin-bottom: 1.5rem !important; }
-    h2 { font-size: 1.5rem !important; font-weight: 600 !important; margin-top: 2rem !important; margin-bottom: 1rem !important; }
-    h3 { font-size: 1.2rem !important; font-weight: 600 !important; margin-top: 1.5rem !important; }
-    p, li { font-size: 1rem; line-height: 1.7; color: #d4d4d8 !important; }
+    .stTextArea label, .stRadio label {{ color: {v["text"]} !important; }}
+    h1 {{ font-size: 2rem !important; font-weight: 700 !important; letter-spacing: -0.5px; margin-bottom: 1.5rem !important; }}
+    h2 {{ font-size: 1.5rem !important; font-weight: 600 !important; margin-top: 2rem !important; margin-bottom: 1rem !important; }}
+    h3 {{ font-size: 1.2rem !important; font-weight: 600 !important; margin-top: 1.5rem !important; }}
+    p, li {{ font-size: 1rem; line-height: 1.7; color: {v["text2"]} !important; }}
 
-    /* Muted secondary text */
-    .meta { color: #71717a; font-size: 0.85rem; }
+    .meta {{ color: {v["muted"]}; font-size: 0.85rem; }}
 
     /* ── COUNTDOWN ── */
-    .days-number { font-size: 4.5rem; font-weight: 800; color: #ffffff; line-height: 1; letter-spacing: -2px; }
-    .days-label { color: #71717a; font-size: 0.9rem; margin-top: 0.25rem; }
-    .phase-tag { display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-top: 0.75rem; }
+    .days-number {{ font-size: 4.5rem; font-weight: 800; color: {v["days_color"]}; line-height: 1; letter-spacing: -2px; }}
+    .days-label {{ color: {v["muted"]}; font-size: 0.9rem; margin-top: 0.25rem; }}
+    .phase-tag {{ display: inline-block; padding: 4px 14px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; margin-top: 0.75rem; }}
 
-    /* ── PROGRESS: always visible, thin stripe above tabs ── */
-    .top-progress { height: 3px; background: #1e293b; border-radius: 2px; margin-bottom: 0.5rem; overflow: hidden; position: sticky; top: 0; z-index: 1000; }
-    .top-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+    /* ── PROGRESS ── */
+    .top-progress {{ height: 3px; background: {v["border"]}; border-radius: 2px; margin-bottom: 0.5rem; overflow: hidden; position: sticky; top: 0; z-index: 1000; }}
+    .top-progress-fill {{ height: 100%; border-radius: 2px; transition: width 0.3s; }}
 
-    /* ── BUTTONS: consistent, minimal ── */
-    .stButton > button {
-        background: transparent; border: 1px solid #27272a; color: #f0f0f0;
+    /* ── BUTTONS ── */
+    .stButton > button {{
+        background: transparent; border: 1px solid {v["border2"]}; color: {v["text"]};
         border-radius: 8px; padding: 0.6rem 1.2rem; font-size: 0.9rem;
         font-weight: 500; transition: border-color 0.15s, background 0.15s;
-    }
-    .stButton > button:hover { border-color: #52525b; background: #18181b; }
+    }}
+    .stButton > button:hover {{ border-color: {v["border_hover"]}; background: {v["bg_hover"]}; }}
 
-    /* ── FORMULA: whitespace-driven, no card border ── */
-    .formula-block { margin: 1.5rem 0; padding: 1.5rem 0; border-top: 1px solid #1e293b; }
-    .formula-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: #71717a; margin-bottom: 0.3rem; }
-    .formula-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.1rem; color: #93c5fd; line-height: 1.8; }
-    .formula-note { font-size: 0.85rem; color: #71717a; margin-top: 0.3rem; }
+    /* ── FORMULA ── */
+    .formula-block {{ margin: 1.5rem 0; padding: 1.5rem 0; border-top: 1px solid {v["border"]}; }}
+    .formula-label {{ font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: {v["muted"]}; margin-bottom: 0.3rem; }}
+    .formula-text {{ font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1.1rem; color: {v["formula_color"]}; line-height: 1.8; }}
+    .formula-note {{ font-size: 0.85rem; color: {v["muted"]}; margin-top: 0.3rem; }}
 
-    /* ── FEEDBACK: green=correct, red=wrong, amber=warning. Always. ── */
-    .feedback-correct {
-        background: #052e1622; border-left: 3px solid #22c55e;
+    /* ── FEEDBACK ── */
+    .feedback-correct {{
+        background: {v["fb_correct_bg"]}; border-left: 3px solid #22c55e;
         padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
-        color: #f0f0f0; line-height: 1.6;
-    }
-    .feedback-wrong {
-        background: #450a0a22; border-left: 3px solid #ef4444;
+        color: {v["text"]}; line-height: 1.6;
+    }}
+    .feedback-wrong {{
+        background: {v["fb_wrong_bg"]}; border-left: 3px solid #ef4444;
         padding: 1rem 1.25rem; margin: 1rem 0; border-radius: 0 6px 6px 0;
-        color: #f0f0f0; line-height: 1.6;
-    }
-    .feedback-insight {
-        background: #1e1b4b22; border-left: 3px solid #818cf8;
+        color: {v["text"]}; line-height: 1.6;
+    }}
+    .feedback-insight {{
+        background: {v["fb_insight_bg"]}; border-left: 3px solid #818cf8;
         padding: 1rem 1.25rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0;
-        color: #d4d4d8; line-height: 1.6;
-    }
-    .feedback-warn {
-        background: #451a0322; border-left: 3px solid #f59e0b;
+        color: {v["text2"]}; line-height: 1.6;
+    }}
+    .feedback-warn {{
+        background: {v["fb_warn_bg"]}; border-left: 3px solid #f59e0b;
         padding: 1rem 1.25rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0;
-        color: #d4d4d8; line-height: 1.6;
-    }
+        color: {v["text2"]}; line-height: 1.6;
+    }}
 
     /* ── CALC STEPS ── */
-    .calc-step {
+    .calc-step {{
         font-family: 'SF Mono', monospace; font-size: 0.9rem;
-        color: #fbbf24; background: #18181b; padding: 0.6rem 1rem;
+        color: {v["calc_color"]}; background: {v["calc_bg"]}; padding: 0.6rem 1rem;
         border-radius: 6px; margin: 0.4rem 0; line-height: 1.5;
-    }
+    }}
 
     /* ── STEP-BY-STEP ── */
-    .solve-step {
-        padding: 0.8rem 0; border-bottom: 1px solid #1e293b;
-        color: #d4d4d8; line-height: 1.6;
-    }
-    .solve-step:last-child { border-bottom: none; }
+    .solve-step {{
+        padding: 0.8rem 0; border-bottom: 1px solid {v["border"]};
+        color: {v["text2"]}; line-height: 1.6;
+    }}
+    .solve-step:last-child {{ border-bottom: none; }}
 
     /* ── RESULT ── */
-    .result-display {
-        font-size: 2rem; font-weight: 700; color: #22c55e;
+    .result-display {{
+        font-size: 2rem; font-weight: 700; color: {v["result_color"]};
         text-align: center; padding: 2rem 0; margin: 1rem 0;
-        border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b;
-    }
+        border-top: 1px solid {v["border"]}; border-bottom: 1px solid {v["border"]};
+    }}
 
     /* ── CHAT ── */
-    .msg-ai { padding: 1rem 0; border-bottom: 1px solid #1e293b; color: #d4d4d8; line-height: 1.7; }
-    .msg-user { padding: 1rem 0; border-bottom: 1px solid #1e293b; color: #f0f0f0; text-align: right; line-height: 1.7; }
+    .msg-ai {{ padding: 1rem 0; border-bottom: 1px solid {v["border"]}; color: {v["text2"]}; line-height: 1.7; }}
+    .msg-user {{ padding: 1rem 0; border-bottom: 1px solid {v["border"]}; color: {v["text"]}; text-align: right; line-height: 1.7; }}
 
     /* ── TOPIC SELECTOR ── */
-    .topic-item { padding: 0.75rem 0; border-bottom: 1px solid #1e293b; cursor: pointer; }
-    .topic-item:hover { background: #18181b; }
-    .topic-active { color: #ffffff; font-weight: 600; }
-    .topic-inactive { color: #71717a; }
+    .topic-item {{ padding: 0.75rem 0; border-bottom: 1px solid {v["border"]}; cursor: pointer; }}
+    .topic-item:hover {{ background: {v["bg_hover"]}; }}
+    .topic-active {{ color: {v["text"]}; font-weight: 600; }}
+    .topic-inactive {{ color: {v["muted"]}; }}
 
-    /* ── TABS: clean, no color except selected ── */
-    /* Sticky tab-bar — always accessible */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 0; border-bottom: 1px solid #1e293b;
+    /* ── TABS ── */
+    .stTabs [data-baseweb="tab-list"] {{
+        gap: 0; border-bottom: 1px solid {v["border"]};
         position: sticky; top: 0; z-index: 999;
-        background: #0b0f19; padding-top: 0.5rem;
+        background: {v["bg"]}; padding-top: 0.5rem;
         overflow-x: auto; flex-wrap: nowrap;
         -webkit-overflow-scrolling: touch;
-    }
-    .stTabs [data-baseweb="tab"] {
-        color: #71717a; font-size: 0.85rem; font-weight: 500;
+    }}
+    .stTabs [data-baseweb="tab"] {{
+        color: {v["muted"]}; font-size: 0.85rem; font-weight: 500;
         padding: 0.75rem 1rem; border-bottom: 2px solid transparent;
         white-space: nowrap; flex-shrink: 0;
-    }
-    .stTabs [aria-selected="true"] {
-        color: #ffffff !important; border-bottom: 2px solid #ffffff !important;
-    }
+    }}
+    .stTabs [aria-selected="true"] {{
+        color: {v["text"]} !important; border-bottom: 2px solid {v["text"]} !important;
+    }}
 
-    /* ── SPACING: generous whitespace ── */
-    .block-container { padding: 2rem 2rem 4rem 2rem !important; max-width: 900px; }
-    .stExpander { border: none !important; border-bottom: 1px solid #1e293b !important; }
-    .stExpander > details > summary { color: #f0f0f0 !important; font-weight: 500; padding: 0.75rem 0; }
+    /* ── SPACING ── */
+    .block-container {{ padding: 2rem 2rem 4rem 2rem !important; max-width: 900px; }}
+    .stExpander {{ border: none !important; border-bottom: 1px solid {v["border"]} !important; }}
+    .stExpander > details > summary {{ color: {v["text"]} !important; font-weight: 500; padding: 0.75rem 0; }}
 
-    /* ── PROGRESS BAR override ── */
-    .stProgress > div > div { background-color: #1e293b; }
-    .stProgress > div > div > div { background-color: #22c55e; }
+    /* ── PROGRESS BAR ── */
+    .stProgress > div > div {{ background-color: {v["border"]}; }}
+    .stProgress > div > div > div {{ background-color: #22c55e; }}
 
     /* ── METRICS ── */
-    [data-testid="stMetricValue"] { color: #ffffff !important; font-size: 1.8rem !important; font-weight: 700 !important; }
-    [data-testid="stMetricLabel"] { color: #71717a !important; }
+    [data-testid="stMetricValue"] {{ color: {v["text"]} !important; font-size: 1.8rem !important; font-weight: 700 !important; }}
+    [data-testid="stMetricLabel"] {{ color: {v["muted"]} !important; }}
 
-    /* ── SELECTBOX / DROPDOWN: dark theme ── */
-    .stSelectbox > div > div { background-color: #111827 !important; color: #ffffff !important; border: 1px solid #27272a !important; border-radius: 8px; }
-    .stSelectbox > div > div > div { color: #ffffff !important; }
-    .stSelectbox > div > div > div > div { color: #ffffff !important; }
-    .stSelectbox svg { fill: #ffffff !important; }
-    [data-baseweb="select"] { background-color: #111827 !important; }
-    [data-baseweb="select"] * { color: #ffffff !important; }
-    [data-baseweb="popover"] { background-color: #0f1520 !important; border: 1px solid #27272a !important; }
-    [data-baseweb="popover"] * { color: #ffffff !important; }
-    [data-baseweb="menu"] { background-color: #0f1520 !important; }
-    [data-baseweb="menu"] * { color: #ffffff !important; }
-    [data-baseweb="menu"] li { color: #ffffff !important; background-color: #0f1520 !important; padding: 0.6rem 1rem !important; }
-    [data-baseweb="menu"] li:hover { background-color: #1e293b !important; }
-    [data-baseweb="menu"] li[aria-selected="true"] { background-color: #1e293b !important; }
-    [role="listbox"] { background-color: #0f1520 !important; }
-    [role="listbox"] * { color: #ffffff !important; }
-    [role="option"] { color: #ffffff !important; background-color: #0f1520 !important; }
-    [role="option"]:hover { background-color: #1e293b !important; }
+    /* ── SELECTBOX / DROPDOWN ── */
+    .stSelectbox > div > div {{ background-color: {v["bg3"]} !important; color: {v["text"]} !important; border: 1px solid {v["border2"]} !important; border-radius: 8px; }}
+    .stSelectbox > div > div > div {{ color: {v["text"]} !important; }}
+    .stSelectbox > div > div > div > div {{ color: {v["text"]} !important; }}
+    .stSelectbox svg {{ fill: {v["text"]} !important; }}
+    [data-baseweb="select"] {{ background-color: {v["bg3"]} !important; }}
+    [data-baseweb="select"] * {{ color: {v["text"]} !important; }}
+    [data-baseweb="popover"] {{ background-color: {v["bg2"]} !important; border: 1px solid {v["border2"]} !important; }}
+    [data-baseweb="popover"] * {{ color: {v["text"]} !important; }}
+    [data-baseweb="menu"] {{ background-color: {v["bg2"]} !important; }}
+    [data-baseweb="menu"] * {{ color: {v["text"]} !important; }}
+    [data-baseweb="menu"] li {{ color: {v["text"]} !important; background-color: {v["bg2"]} !important; padding: 0.6rem 1rem !important; }}
+    [data-baseweb="menu"] li:hover {{ background-color: {v["border"]} !important; }}
+    [data-baseweb="menu"] li[aria-selected="true"] {{ background-color: {v["border"]} !important; }}
+    [role="listbox"] {{ background-color: {v["bg2"]} !important; }}
+    [role="listbox"] * {{ color: {v["text"]} !important; }}
+    [role="option"] {{ color: {v["text"]} !important; background-color: {v["bg2"]} !important; }}
+    [role="option"]:hover {{ background-color: {v["border"]} !important; }}
 
-    /* ── TEXT INPUT: dark theme ── */
-    .stTextInput > div > div > input { background-color: #111827 !important; color: #f0f0f0 !important; border: 1px solid #27272a !important; }
-    .stNumberInput > div > div > input { background-color: #111827 !important; color: #f0f0f0 !important; border: 1px solid #27272a !important; }
-    .stTextArea > div > div > textarea { background-color: #111827 !important; color: #f0f0f0 !important; border: 1px solid #27272a !important; }
+    /* ── TEXT INPUT ── */
+    .stTextInput > div > div > input {{ background-color: {v["bg3"]} !important; color: {v["text"]} !important; border: 1px solid {v["border2"]} !important; }}
+    .stNumberInput > div > div > input {{ background-color: {v["bg3"]} !important; color: {v["text"]} !important; border: 1px solid {v["border2"]} !important; }}
+    .stTextArea > div > div > textarea {{ background-color: {v["bg3"]} !important; color: {v["text"]} !important; border: 1px solid {v["border2"]} !important; }}
 
-    /* ── RADIO: dark theme ── */
-    .stRadio > div { color: #f0f0f0 !important; }
-    .stRadio label span { color: #d4d4d8 !important; }
-</style>
-""", unsafe_allow_html=True)
+    /* ── RADIO ── */
+    .stRadio > div {{ color: {v["text"]} !important; }}
+    .stRadio label span {{ color: {v["text2"]} !important; }}
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {{
+        .block-container {{ padding: 1rem 0.75rem 3rem 0.75rem !important; max-width: 100% !important; }}
+        h1 {{ font-size: 1.5rem !important; }}
+        h2 {{ font-size: 1.25rem !important; margin-top: 1.5rem !important; }}
+        h3 {{ font-size: 1.1rem !important; }}
+        .days-number {{ font-size: 3rem; }}
+        .stTabs [data-baseweb="tab"] {{ font-size: 0.75rem; padding: 0.6rem 0.6rem; }}
+        .stButton > button {{ padding: 0.75rem 1rem; font-size: 0.95rem; min-height: 44px; }}
+        .formula-text {{ font-size: 0.95rem; word-break: break-all; }}
+        .calc-step {{ font-size: 0.8rem; word-break: break-all; }}
+        .result-display {{ font-size: 1.5rem; padding: 1.5rem 0; }}
+        [data-testid="stMetricValue"] {{ font-size: 1.4rem !important; }}
+        /* Stack columns on mobile */
+        [data-testid="stHorizontalBlock"] {{ flex-wrap: wrap !important; gap: 0.5rem !important; }}
+        [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {{ flex: 1 1 100% !important; min-width: 100% !important; }}
+        /* Allow 2-col layouts for small buttons like A/B/C/D */
+        .mobile-2col [data-testid="stColumn"] {{ flex: 1 1 45% !important; min-width: 45% !important; }}
+    }}
+
+    /* ── TABLET ── */
+    @media (min-width: 769px) and (max-width: 1024px) {{
+        .block-container {{ padding: 1.5rem 1.5rem 3rem 1.5rem !important; }}
+    }}
+</style>"""
+
+st.markdown(get_theme_css(), unsafe_allow_html=True)
 
 # ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -509,21 +806,29 @@ QUESTION_BANK = {
 
 # ─── VISUAL CHARTS ───────────────────────────────────────────────────────────
 
-CT = dict(template="plotly_dark", paper_bgcolor="#0b0f19", plot_bgcolor="#111827",
-    font=dict(color="#f0f0f0", size=13),
-    title_font=dict(color="#f0f0f0", size=14),
-    legend=dict(font=dict(color="#f0f0f0", size=12)),
-    xaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
-    yaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
-    margin=dict(l=40, r=20, t=40, b=40),
-)
+def get_chart_template():
+    is_dark = st.session_state.get("theme", "dark") == "dark"
+    if is_dark:
+        return dict(template="plotly_dark", paper_bgcolor="#0b0f19", plot_bgcolor="#111827",
+            font=dict(color="#f0f0f0", size=13), title_font=dict(color="#f0f0f0", size=14),
+            legend=dict(font=dict(color="#f0f0f0", size=12)),
+            xaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
+            yaxis=dict(color="#f0f0f0", tickfont=dict(color="#a1a1aa"), title_font=dict(color="#d4d4d8"), gridcolor="#1e293b"),
+            margin=dict(l=40, r=20, t=40, b=40))
+    else:
+        return dict(template="plotly_white", paper_bgcolor="#ffffff", plot_bgcolor="#f8fafc",
+            font=dict(color="#1e293b", size=13), title_font=dict(color="#1e293b", size=14),
+            legend=dict(font=dict(color="#334155", size=12)),
+            xaxis=dict(color="#1e293b", tickfont=dict(color="#64748b"), title_font=dict(color="#334155"), gridcolor="#e2e8f0"),
+            yaxis=dict(color="#1e293b", tickfont=dict(color="#64748b"), title_font=dict(color="#334155"), gridcolor="#e2e8f0"),
+            margin=dict(l=40, r=20, t=40, b=40))
 
 def chart_tidsverdi():
     years = list(range(0, 31))
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=years, y=[10000*(1.05)**t for t in years], name="Rentes rente 5%", line=dict(color="#22c55e", width=3)))
     fig.add_trace(go.Scatter(x=years, y=[10000*(1+0.05*t) for t in years], name="Enkel rente 5%", line=dict(color="#f59e0b", width=2, dash="dash")))
-    fig.update_layout(title="Rentes-rente vs. enkel rente: 10 000 kr", xaxis_title="År", yaxis_title="kr", height=300, **CT)
+    fig.update_layout(title="Rentes-rente vs. enkel rente: 10 000 kr", xaxis_title="År", yaxis_title="kr", height=300, **get_chart_template())
     return fig
 
 def chart_npv_irr():
@@ -533,7 +838,7 @@ def chart_npv_irr():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=[r*100 for r in rates], y=npvs, line=dict(color="#60a5fa", width=3)))
     fig.add_hline(y=0, line_dash="dash", line_color="#ef4444")
-    fig.update_layout(title="NPV vs. rente — IRR der kurven krysser null", xaxis_title="r (%)", yaxis_title="NPV", height=300, **CT)
+    fig.update_layout(title="NPV vs. rente — IRR der kurven krysser null", xaxis_title="r (%)", yaxis_title="NPV", height=300, **get_chart_template())
     return fig
 
 def chart_sml():
@@ -543,7 +848,7 @@ def chart_sml():
     fig.add_trace(go.Scatter(x=betas, y=sml, name="SML", line=dict(color="#3b82f6", width=3)))
     fig.add_trace(go.Scatter(x=[0.8,1.2,1.5], y=[12,9,16], mode="markers+text", text=["Kjøp!","Selg!","Kjøp!"],
         textposition="top center", textfont=dict(color="#fff"), marker=dict(size=14, color=["#22c55e","#ef4444","#22c55e"])))
-    fig.update_layout(title="SML: Over=underpriset, Under=overpriset", xaxis_title="β", yaxis_title="E(r) %", height=350, **CT)
+    fig.update_layout(title="SML: Over=underpriset, Under=overpriset", xaxis_title="β", yaxis_title="E(r) %", height=350, **get_chart_template())
     return fig
 
 def chart_diversification():
@@ -551,13 +856,13 @@ def chart_diversification():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=n, y=[15+30/i for i in n], line=dict(color="#60a5fa", width=3), fill="tozeroy", fillcolor="rgba(96,165,250,0.1)"))
     fig.add_hline(y=15, line_dash="dash", line_color="#ef4444", annotation_text="Systematisk", annotation_font_color="#fff")
-    fig.update_layout(title="Diversifisering: usystematisk risiko forsvinner", xaxis_title="Aksjer", yaxis_title="σ %", height=300, **CT)
+    fig.update_layout(title="Diversifisering: usystematisk risiko forsvinner", xaxis_title="Aksjer", yaxis_title="σ %", height=300, **get_chart_template())
     return fig
 
 def chart_wacc():
     fig = go.Figure(go.Bar(x=["EK-del","Gjeld-del","WACC"], y=[7.2,1.56,8.76], marker_color=["#22c55e","#60a5fa","#f59e0b"],
         text=["7,20%","1,56%","8,76%"], textposition="outside", textfont=dict(color="#fff", size=14)))
-    fig.update_layout(title="WACC: 60%EK(12%) + 40%Gjeld(5%,T=22%)", yaxis_title="%", height=300, **CT)
+    fig.update_layout(title="WACC: 60%EK(12%) + 40%Gjeld(5%,T=22%)", yaxis_title="%", height=300, **get_chart_template())
     return fig
 
 def chart_bond():
@@ -566,7 +871,7 @@ def chart_bond():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=ys, y=ps, line=dict(color="#ef4444", width=3)))
     fig.add_hline(y=1000000, line_dash="dash", line_color="#94a3b8", annotation_text="Pari", annotation_font_color="#fff")
-    fig.update_layout(title="Rente↑ = Pris↓", xaxis_title="YTM%", yaxis_title="Pris", height=300, **CT)
+    fig.update_layout(title="Rente↑ = Pris↓", xaxis_title="YTM%", yaxis_title="Pris", height=300, **get_chart_template())
     return fig
 
 def chart_loan():
@@ -576,7 +881,7 @@ def chart_loan():
     fig = go.Figure()
     fig.add_trace(go.Bar(x=list(range(1,n+1)), y=[pmt]*n, name="Annuitet", marker_color="#22c55e"))
     fig.add_trace(go.Bar(x=list(range(1,n+1)), y=sp, name="Serie", marker_color="#60a5fa"))
-    fig.update_layout(title="Annuitet(konst) vs Serie(synkende)", xaxis_title="År", yaxis_title="PMT", barmode="group", height=300, **CT)
+    fig.update_layout(title="Annuitet(konst) vs Serie(synkende)", xaxis_title="År", yaxis_title="PMT", barmode="group", height=300, **get_chart_template())
     return fig
 
 def chart_fcf():
@@ -585,7 +890,7 @@ def chart_fcf():
         connector={"line":{"color":"#2d3a4f"}}, increasing={"marker":{"color":"#22c55e"}},
         decreasing={"marker":{"color":"#ef4444"}}, totals={"marker":{"color":"#3b82f6"}},
         textposition="outside", text=[f"{v:+,.0f}" for v in [500000,-110000,390000,80000,-50000,-20000,400000]], textfont=dict(color="#fff")))
-    fig.update_layout(title="FCF Waterfall", yaxis_title="kr", height=350, **CT)
+    fig.update_layout(title="FCF Waterfall", yaxis_title="kr", height=350, **get_chart_template())
     return fig
 
 CHARTS = {
@@ -761,6 +1066,8 @@ def init_state():
         "history": {},
         # Interleaving: smart økt state
         "smart_queue": [], "smart_idx": 0, "smart_score": 0, "smart_total": 0,
+        # Theme and language
+        "theme": "dark", "lang": "no",
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -890,14 +1197,14 @@ def days_left():
 
 def study_phase():
     d = days_left()
-    if d > 42: return "build", "Bygg forståelse 📖", "#22c55e"
-    elif d > 21: return "mix", "Blandet øving 📐", "#eab308"
-    elif d > 7: return "repeat", "Repetisjon ⏩", "#f97316"
-    return "intense", "INTENSIV 🔥", "#ef4444"
+    if d > 42: return "build", tr("phase_build"), "#22c55e"
+    elif d > 21: return "mix", tr("phase_mix"), "#eab308"
+    elif d > 7: return "repeat", tr("phase_repeat"), "#f97316"
+    return "intense", tr("phase_intense"), "#ef4444"
 
 def solve_tvm(n, iyr, pv, pmt, fv):
     unknowns = sum(1 for x in [n, iyr, pv, pmt, fv] if x is None)
-    if unknowns != 1: return {"error": "Nøyaktig ett felt tomt."}
+    if unknowns != 1: return {"error": tr("exactly_one_empty")}
     r = iyr/100 if iyr is not None else None
     try:
         if fv is None:
@@ -910,9 +1217,9 @@ def solve_tvm(n, iyr, pv, pmt, fv):
             if r==0: return {"var":"PMT","value":-(fv+pv)/n}
             return {"var":"PMT","value":-(fv+pv*(1+r)**n)*r/((1+r)**n-1)}
         if n is None:
-            if r==0: return {"var":"N","value":-(fv+pv)/pmt} if pmt!=0 else {"error":"Umulig"}
+            if r==0: return {"var":"N","value":-(fv+pv)/pmt} if pmt!=0 else {"error":tr("no_solution")}
             num,den = pmt/r-fv, pv+pmt/r
-            if num<=0 or den<=0: return {"error":"Ingen løsning."}
+            if num<=0 or den<=0: return {"error":tr("no_solution")}
             return {"var":"N","value":math.log(num/den)/math.log(1+r)}
         if iyr is None:
             rg = 0.1
@@ -930,6 +1237,28 @@ def solve_tvm(n, iyr, pv, pmt, fv):
     except Exception as e: return {"error":str(e)}
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# SETTINGS SIDEBAR
+# ═══════════════════════════════════════════════════════════════════════════════
+
+with st.sidebar:
+    st.markdown(f"### {tr('settings')}")
+    theme_options = [tr("theme_dark"), tr("theme_light")]
+    current_theme = 0 if st.session_state.theme == "dark" else 1
+    theme_sel = st.radio(tr("theme_label"), theme_options, index=current_theme, key="theme_radio", horizontal=True)
+    new_theme = "dark" if theme_sel == theme_options[0] else "light"
+    if new_theme != st.session_state.theme:
+        st.session_state.theme = new_theme
+        st.rerun()
+
+    lang_options = ["Norsk", "English"]
+    current_lang = 0 if st.session_state.lang == "no" else 1
+    lang_sel = st.radio(tr("language_label"), lang_options, index=current_lang, key="lang_radio", horizontal=True)
+    new_lang = "no" if lang_sel == "Norsk" else "en"
+    if new_lang != st.session_state.lang:
+        st.session_state.lang = new_lang
+        st.rerun()
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # TABS
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -938,7 +1267,7 @@ studied_pct = len(st.session_state.studied) / 7
 pct_color = "#22c55e" if studied_pct > 0.7 else "#f59e0b" if studied_pct > 0.3 else "#ef4444"
 st.markdown(f'<div class="top-progress"><div class="top-progress-fill" style="width:{studied_pct*100}%;background:{pct_color};"></div></div>', unsafe_allow_html=True)
 
-tabs = st.tabs(["Hjem", "Lær", "Oppgaver", "Smart økt", "AI-trener", "Formler", "Chat", "Fremgang", "Kalkulator"])
+tabs = st.tabs(tr("tabs"))
 
 # ─── HJEM ────────────────────────────────────────────────────────────────────
 
@@ -947,26 +1276,19 @@ with tabs[0]:
     phase, phase_label, phase_color = study_phase()
 
     st.markdown(f'<div class="days-number">{dl}</div>', unsafe_allow_html=True)
-    st.markdown('<div class="days-label">dager til eksamen · 1. juni 2026</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="days-label">{tr("days_to_exam")}</div>', unsafe_allow_html=True)
     st.markdown("")
     st.markdown(f'<span class="phase-tag" style="background:{phase_color}22;color:{phase_color};">{phase_label}</span>', unsafe_allow_html=True)
 
-    # Fase-spesifikke anbefalinger (prinsipp 10)
-    if phase == "build":
-        st.caption("Fokus: Forstå konseptene. Bruk Lær-fanen og AI-treneren med «Forklar tilbake».")
-    elif phase == "mix":
-        st.caption("Fokus: Bland temaer! Bruk Smart økt for interleaving. Beregningsoppgaver med kalkulator.")
-    elif phase == "repeat":
-        st.caption("Fokus: Repeter svake temaer. Eksamensimulering. Flervalg under tidspress.")
-    else:
-        st.caption("SISTE UKE: Kun eksamensimulering og formler. Du kan dette!")
+    focus_map = {"build": "focus_build", "mix": "focus_mix", "repeat": "focus_repeat", "intense": "focus_intense"}
+    st.caption(t(focus_map.get(phase, "focus_build")))
 
     st.markdown("")
     c1, c2 = st.columns(2)
-    with c1: st.progress(len(st.session_state.studied)/7, text=f"{len(st.session_state.studied)}/7 temaer")
-    with c2: st.metric("Poeng ⚡", st.session_state.points)
+    with c1: st.progress(len(st.session_state.studied)/7, text=f"{len(st.session_state.studied)}/7 {tr('topics_progress')}")
+    with c2: st.metric(tr("points"), st.session_state.points)
 
-    st.markdown("### Anbefalt i dag")
+    st.markdown(f"### {tr('recommended_today')}")
     for i, (sc, tid, tn, sub) in enumerate(get_recommendations()):
         key = f"{tid}::{sub}"
         stat = st.session_state.sub_stats.get(key)
@@ -976,32 +1298,32 @@ with tabs[0]:
             ac = "#22c55e" if acc>=70 else "#eab308" if acc>=40 else "#ef4444"
             at = f'<span style="color:{ac}">{acc}%</span>'
         else:
-            at = '<span style="color:#94a3b8">Ikke øvd</span>'
+            at = f'<span style="color:#94a3b8">{tr("not_practiced")}</span>'
         st.markdown(f'<div class="topic-item" style="border-left:4px solid {cols[i]};"><span style="color:{cols[i]};font-weight:bold;">#{i+1}</span> <strong>{sub}</strong> <span style="color:#94a3b8;font-size:13px;">— {tn}</span><span style="float:right;">{at}</span></div>', unsafe_allow_html=True)
 
     try:
         if not st.secrets.get("ANTHROPIC_API_KEY", ""):
             raise Exception()
     except:
-        with st.expander("🔑 API-nøkkel"):
-            k = st.text_input("Anthropic API-nøkkel", type="password")
-            if k: st.session_state["api_key"] = k; st.success("Lagret!")
+        with st.expander(tr("api_key_label")):
+            k = st.text_input(tr("api_key_input"), type="password")
+            if k: st.session_state["api_key"] = k; st.success(tr("api_key_saved"))
 
 # ─── LÆR ────────────────────────────────────────────────────────────────────
 
 with tabs[1]:
-    st.markdown("## Lær")
+    st.markdown(f"## {tr('learn')}")
 
     # Tema og undertema som kaskade-dropdowns
-    topic_names = [t["name"] for t in TOPICS]
-    learn_sel = st.selectbox("Tema", topic_names, key="learn_tema_sel", index=0)
+    topic_names = [tp["name"] for tp in TOPICS]
+    learn_sel = st.selectbox(tr("topic"), topic_names, key="learn_tema_sel", index=0)
     learn_tid = next(t["id"] for t in TOPICS if t["name"] == learn_sel)
     learn_topic_obj = topic_by_id(learn_tid)
 
-    sub_options = ["Alle konsepter"] + learn_topic_obj["subs"]
-    learn_sub_sel = st.selectbox("Undertema", sub_options, key="learn_sub_sel", index=0)
+    sub_options = [tr("all_concepts")] + learn_topic_obj["subs"]
+    learn_sub_sel = st.selectbox(tr("subtopic"), sub_options, key="learn_sub_sel", index=0)
     st.session_state.learn_topic = learn_tid
-    st.session_state.learn_sub = learn_sub_sel if learn_sub_sel != "Alle konsepter" else None
+    st.session_state.learn_sub = learn_sub_sel if learn_sub_sel != tr("all_concepts") else None
 
     topic = learn_topic_obj
     tid = learn_tid
@@ -1017,7 +1339,7 @@ with tabs[1]:
             st.plotly_chart(cfn(), use_container_width=True)
             st.markdown(f'<p style="color:#a1a1aa; font-size:0.9rem; line-height:1.6; margin-top:-0.5rem; margin-bottom:2rem;">{explanation}</p>', unsafe_allow_html=True)
         st.markdown("---")
-        st.markdown("### Nøkkelkonsepter")
+        st.markdown(f"### {tr('key_concepts')}")
         concepts = content["concepts"]
         if st.session_state.learn_sub:
             sub_lower = st.session_state.learn_sub.lower()
@@ -1033,7 +1355,7 @@ with tabs[1]:
                 st.info(f"💡 {c['tip']}")
         # Mini-quiz
         st.markdown("---")
-        st.markdown("### Test deg selv")
+        st.markdown(f"### {tr('test_yourself')}")
         bank = QUESTION_BANK.get(tid, {}).get("flervalg", [])
         if bank:
             qk = f"lq_{tid}"
@@ -1053,26 +1375,28 @@ with tabs[1]:
                     if q.get("calc_steps"):
                         st.markdown(f'<div class="calc-step">HP 10bII+: {q["calc_steps"]}</div>', unsafe_allow_html=True)
                 st.markdown("")
-            if st.button("🔄 Nye spørsmål", key=f"ln_{tid}"):
+            if st.button(tr("new_questions"), key=f"ln_{tid}"):
                 st.session_state[qk] = random.sample(range(len(bank)), min(2, len(bank))); st.rerun()
 
 # ─── OPPGAVER ────────────────────────────────────────────────────────────────
 
 with tabs[2]:
-    st.markdown("## Oppgaver")
+    st.markdown(f"## {tr('exercises')}")
     tc1, tc2 = st.columns(2)
-    with tc1: test_topic = st.selectbox("Tema", [t["name"] for t in TOPICS], key="test_sel")
-    with tc2: test_type = st.selectbox("Type", ["Flervalg", "Beregning", "Case"], key="type_sel")
+    type_display = [tr("multiple_choice"), tr("calculation"), tr("case")]
+    type_keys = ["flervalg", "beregning", "case"]
+    with tc1: test_topic = st.selectbox(tr("topic"), [t["name"] for t in TOPICS], key="test_sel")
+    with tc2: test_type_sel = st.selectbox(tr("type"), type_display, key="type_sel")
+    test_type_key = type_keys[type_display.index(test_type_sel)]
     test_tid = next(t["id"] for t in TOPICS if t["name"] == test_topic)
     diff = get_difficulty(test_tid)
-    st.caption(f"Adaptiv vanskelighetsgrad: {'⭐'*diff} (basert på din historikk)")
+    st.caption(f"{tr('adaptive_difficulty')}: {'⭐'*diff}")
     bank = QUESTION_BANK.get(test_tid, {})
-    tmap = {"Flervalg":"flervalg","Beregning":"beregning","Case":"case"}
-    qs = bank.get(tmap[test_type], [])
+    qs = bank.get(test_type_key, [])
 
     if not qs:
-        st.info("Ingen oppgaver her ennå. Prøv AI-treneren!")
-    elif test_type == "Flervalg":
+        st.info(tr("no_exercises"))
+    elif test_type_key == "flervalg":
         # Filtrer på vanskelighetsgrad
         suitable = [q for q in qs if abs(q.get("difficulty",1)-diff)<=1]
         if not suitable: suitable = qs
@@ -1083,7 +1407,7 @@ with tabs[2]:
         if st.session_state.fv_idx < len(suitable):
             qi = st.session_state.fv_order[st.session_state.fv_idx % len(suitable)]
             q = suitable[qi]
-            st.markdown(f"##### Spørsmål {st.session_state.fv_idx+1} <span class='micro-badge' style='background:#3b82f622;color:#3b82f6;'>{'⭐'*q.get('difficulty',1)}</span>", unsafe_allow_html=True)
+            st.markdown(f"##### {tr('question')} {st.session_state.fv_idx+1} <span class='micro-badge' style='background:#3b82f622;color:#3b82f6;'>{'⭐'*q.get('difficulty',1)}</span>", unsafe_allow_html=True)
             st.markdown(f"**{q['q']}**")
             for ci, ch in enumerate(q["choices"]):
                 if st.button(ch, key=f"fvc_{ci}", use_container_width=True):
@@ -1101,31 +1425,31 @@ with tabs[2]:
                 if fv["calc"]:
                     st.markdown(f'<div class="calc-step">HP 10bII+: {fv["calc"]}</div>', unsafe_allow_html=True)
                 st.markdown(f'<div class="formula-block"><div class="formula-text">{fv["f"]}</div></div>', unsafe_allow_html=True)
-                if st.button("➡️ Neste", use_container_width=True):
+                if st.button(tr("next"), use_container_width=True):
                     st.session_state.fv_idx += 1; st.session_state.pop("_fv",None); st.rerun()
         else:
             pct = round(st.session_state.fv_score/max(1,st.session_state.fv_total)*100)
             record_history(test_tid, st.session_state.fv_score, st.session_state.fv_total)
-            st.success(f"Ferdig! {st.session_state.fv_score}/{st.session_state.fv_total} ({pct}%)")
+            st.success(f"{tr('done')} {st.session_state.fv_score}/{st.session_state.fv_total} ({pct}%)")
             if pct >= 80: st.balloons()
-            if st.button("🔄 Igjen"):
+            if st.button(tr("again")):
                 st.session_state.fv_idx=0; st.session_state.fv_score=0; st.session_state.fv_total=0; st.rerun()
 
-    elif test_type == "Beregning":
+    elif test_type_key == "beregning":
         if st.session_state.calc_idx < len(qs):
             q = qs[st.session_state.calc_idx]
-            st.markdown(f"##### Oppgave {st.session_state.calc_idx+1}")
+            st.markdown(f"##### {tr('exercise_label')} {st.session_state.calc_idx+1}")
             st.markdown(q["q"])
-            st.markdown(f'<div class="formula-block"><div class="formula-label">Formel</div><div class="formula-text">{q["formula"]}</div></div>', unsafe_allow_html=True)
-            ua = st.number_input("Ditt svar:", key=f"ci_{st.session_state.calc_idx}", value=None, placeholder="Skriv inn...")
+            st.markdown(f'<div class="formula-block"><div class="formula-label">{tr("formula_label")}</div><div class="formula-text">{q["formula"]}</div></div>', unsafe_allow_html=True)
+            ua = st.number_input(tr("your_answer"), key=f"ci_{st.session_state.calc_idx}", value=None, placeholder="...")
             b1, b2 = st.columns(2)
             with b1:
-                if st.button("✅ Sjekk", use_container_width=True) and ua is not None:
+                if st.button(tr("check"), use_container_width=True) and ua is not None:
                     st.session_state[f"_cr{st.session_state.calc_idx}"] = "ok" if abs(ua-q["answer"])<=q["tolerance"] else "no"
                     if abs(ua-q["answer"])<=q["tolerance"]: st.session_state.points+=15
                     st.rerun()
             with b2:
-                if st.button("💡 Løsning", use_container_width=True):
+                if st.button(tr("solution"), use_container_width=True):
                     st.session_state[f"_cr{st.session_state.calc_idx}"] = "show"; st.rerun()
             rk = f"_cr{st.session_state.calc_idx}"
             if rk in st.session_state:
@@ -1141,46 +1465,46 @@ with tabs[2]:
                     st.markdown("**HP 10bII+ tastetrykk:**")
                     for cs in q["calc_steps"]:
                         st.markdown(f'<div class="calc-step">{cs}</div>', unsafe_allow_html=True)
-                if st.button("➡️ Neste", key="cn"):
+                if st.button(tr("next"), key="cn"):
                     st.session_state.calc_idx += 1; st.rerun()
         else:
-            st.success("Alle oppgaver fullført!")
-            if st.button("🔄 Igjen", key="cr"): st.session_state.calc_idx=0; st.rerun()
+            st.success(tr("all_done"))
+            if st.button(tr("again"), key="cr"): st.session_state.calc_idx=0; st.rerun()
 
-    elif test_type == "Case":
+    elif test_type_key == "case":
         if not qs:
-            st.info("Ingen case-oppgaver.")
+            st.info(tr("no_cases"))
         else:
             case = qs[st.session_state.case_idx % len(qs)]
-            st.markdown("##### Case — Eksamensformat")
+            st.markdown(f"##### {tr('case_exam')}")
             st.markdown(case["scenario"])
             st.markdown("---")
             for qi, cq in enumerate(case["questions"]):
                 st.markdown(f"**{cq['q']}**")
-                st.text_area("Ditt svar:", key=f"ca_{st.session_state.case_idx}_{qi}", height=80)
+                st.text_area(tr("your_answer"), key=f"ca_{st.session_state.case_idx}_{qi}", height=80)
                 rk = f"_cs{st.session_state.case_idx}_{qi}"
-                if st.button(f"💡 Fasit {qi+1}", key=f"cb_{qi}"):
+                if st.button(f"{tr('answer_key')} {qi+1}", key=f"cb_{qi}"):
                     st.session_state[rk] = True; st.rerun()
                 if st.session_state.get(rk):
                     st.markdown(f'<div class="feedback-correct">{cq["answer"]}</div>', unsafe_allow_html=True)
                 st.markdown("")
-            if st.button("➡️ Neste case", key="cnc"):
+            if st.button(tr("next_case"), key="cnc"):
                 st.session_state.case_idx += 1; st.rerun()
 
 # ─── SMART ØKT (Interleaving + Adaptiv) ─────────────────────────────────────
 
 with tabs[3]:
-    st.markdown("### 🧠 Smart økt — Interleaved trening")
-    st.caption("Blander temaer bevisst for bedre langtidshukommelse. Tilpasser seg ditt nivå.")
+    st.markdown(f"### {tr('smart_session')}")
+    st.caption(tr("smart_caption"))
 
     phase_id, _, _ = study_phase()
     if phase_id == "build":
-        st.info("📖 Fokus nå: Forstå konseptene først (Lær-fanen). Smart økt er mest effektiv etter du har sett temaene.")
+        st.info(tr("smart_build_tip"))
 
     if not st.session_state.smart_queue:
         est = "~5 min" if phase_id in ["repeat","intense"] else "~8 min"
-        st.markdown(f"**10 spørsmål, blandet fra alle temaer.** Estimert tid: {est}")
-        if st.button("▶ Start smart økt", type="primary", use_container_width=True):
+        st.markdown(f"**{tr('smart_questions')}** {tr('estimated_time')}: {est}")
+        if st.button(tr("start_smart"), type="primary", use_container_width=True):
             st.session_state.smart_queue = build_smart_queue()
             st.session_state.smart_idx = 0; st.session_state.smart_score = 0; st.session_state.smart_total = 0
             st.rerun()
@@ -1212,7 +1536,7 @@ with tabs[3]:
                     st.markdown(f'<div class="feedback-insight">💡 {sq["int"]}</div>', unsafe_allow_html=True)
                 if sq["calc"]:
                     st.markdown(f'<div class="calc-step">HP 10bII+: {sq["calc"]}</div>', unsafe_allow_html=True)
-                if st.button("➡️ Neste", key="sqn", use_container_width=True):
+                if st.button(tr("next"), key="sqn", use_container_width=True):
                     st.session_state.smart_idx += 1; st.session_state.pop("_sq",None); st.rerun()
         else:
             pct = round(st.session_state.smart_score/max(1,st.session_state.smart_total)*100)
@@ -1222,76 +1546,66 @@ with tabs[3]:
             for _, tid, tname, q in queue:
                 if tid not in topic_results: topic_results[tid] = {"name":tname,"c":0,"t":0}
                 topic_results[tid]["t"] += 1
-            st.markdown("**Per tema:**")
+            st.markdown(f"**{tr('per_topic')}**")
             for tid, r in topic_results.items():
                 acc = get_topic_accuracy(tid)
                 ac = "#22c55e" if acc and acc>=70 else "#ef4444" if acc and acc<50 else "#eab308"
                 st.markdown(f'<span style="color:{ac}">{"●"}</span> {r["name"]} — {acc or "?"}%', unsafe_allow_html=True)
-            if st.button("🔄 Ny smart økt", use_container_width=True):
+            if st.button(tr("new_smart"), use_container_width=True):
                 st.session_state.smart_queue = []; st.session_state.pop("_sq",None); st.rerun()
 
 # ─── AI-TRENER ───────────────────────────────────────────────────────────────
 
 with tabs[4]:
-    st.markdown("## AI-trener")
+    st.markdown(f"## {tr('ai_trainer')}")
 
     # Tema, undertema og modus som dropdowns
     ai_c1, ai_c2 = st.columns(2)
     with ai_c1:
-        ai_topic_sel = st.selectbox("Tema", [t["name"] for t in TOPICS], key="ai_tema_sel")
+        ai_topic_sel = st.selectbox(tr("topic"), [t["name"] for t in TOPICS], key="ai_tema_sel")
     ai_tid = next(t["id"] for t in TOPICS if t["name"] == ai_topic_sel)
     ai_topic_obj = topic_by_id(ai_tid)
     st.session_state.sel_topic = ai_tid
 
     with ai_c2:
-        ai_sub_opts = ["Velges av AI"] + ai_topic_obj["subs"]
-        ai_sub_sel = st.selectbox("Undertema", ai_sub_opts, key="ai_sub_sel")
-    st.session_state.sel_sub = ai_sub_sel if ai_sub_sel != "Velges av AI" else None
+        ai_sub_opts = [tr("chosen_by_ai")] + ai_topic_obj["subs"]
+        ai_sub_sel = st.selectbox(tr("subtopic"), ai_sub_opts, key="ai_sub_sel")
+    st.session_state.sel_sub = ai_sub_sel if ai_sub_sel != tr("chosen_by_ai") else None
 
     mode_labels = [f"{m['icon']} {m['name']} ({m['time']})" for m in MODES]
-    mode_sel = st.selectbox("Modus", mode_labels, key="ai_mode_sel")
+    mode_sel = st.selectbox(tr("mode"), mode_labels, key="ai_mode_sel")
     sel_mode_idx = mode_labels.index(mode_sel)
     st.session_state.sel_mode = MODES[sel_mode_idx]["id"]
     if st.session_state.sel_topic:
         topic = topic_by_id(st.session_state.sel_topic)
         mode = next(m for m in MODES if m["id"]==st.session_state.sel_mode)
         diff = get_difficulty(topic["id"])
-        diff_label = ["Grunnleggende","Middels","Avansert"][diff-1]
-        st.caption(f"Adaptiv vanskelighetsgrad: {diff_label} ({'⭐'*diff})")
-        if st.button(f"▶ Start {mode['name']} — {topic['name']}", type="primary", use_container_width=True):
+        diff_label = tr("difficulty_levels")[diff-1]
+        st.caption(f"{tr('adaptive_difficulty')}: {diff_label} ({'⭐'*diff})")
+        if st.button(f"{tr('start_mode')} {mode['name']} — {topic['name']}", type="primary", use_container_width=True):
             client = get_client()
             if not client:
-                st.warning("Legg inn API-nøkkel på Hjem-fanen.")
+                st.warning(tr("enter_api_key"))
             else:
                 st.session_state.sessions += 1; st.session_state.points += 10
                 if topic["id"] not in st.session_state.studied: st.session_state.studied.append(topic["id"])
                 sub = f", undertema: {st.session_state.sel_sub}" if st.session_state.sel_sub else ""
-                diff_instr = f"Studentens nivå: {diff_label}. " + ("Bruk enkle tall og ett steg om gangen." if diff==1 else "Bruk realistiske eksamenstall." if diff==2 else "Bruk komplekse oppgaver med flere steg og tidspress.")
+                diff_instr = f"Studentens nivå: {diff_label}. " + tr("diff_instructions")[diff-1]
                 user_msg = f"{mode['instr']} {diff_instr} Tema: {topic['name']}{sub}. Start nå."
                 st.session_state.study_msgs = [{"role":"user","content":user_msg}]
-                system = f"""Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk.
-
-PEDAGOGISKE REGLER:
-1. Gi ALDRI fasit før studenten har prøvd — still spørsmål, vent, evaluer.
-2. Forklar ALLTID intuisjonen (HVORFOR) før formelen (HVORDAN).
-3. Ved feil: forklar nøyaktig hva studenten misforsto, ikke bare si "feil".
-4. Vis HP 10bII+ tastetrykk for alle beregninger.
-5. Bruk eksamensformat: tabeller, realistiske tall, BI-språk.
-6. Avslutt alltid med ett konkret spørsmål til studenten.
-7. Riktig svar: «Riktig — og dette er akkurat det eksamen tester. [kort forklaring av hvorfor]»
-8. Feil svar: «Nesten — de fleste gjør denne feilen fordi [konkret årsak]. Prøv igjen med dette hintet: [hint]»"""
-                with st.spinner("Henter oppgave..."):
+                system = tr("ai_system_full")
+                with st.spinner(tr("loading")):
                     try:
                         reply = call_ai(client, st.session_state.study_msgs, system)
                         st.session_state.study_msgs.append({"role":"assistant","content":reply})
-                    except Exception as e: st.error(f"API-feil: {e}")
+                    except Exception as e: st.error(f"{tr('api_error')}: {e}")
                 st.rerun()
     if st.session_state.study_msgs:
         for msg in st.session_state.study_msgs[1:]:
             cls = "msg-ai" if msg["role"]=="assistant" else "msg-user"
             st.markdown(f'<div class="{cls}">{msg["content"]}</div>', unsafe_allow_html=True)
 
-        sys = """Du er eksamenstutor for BØK 3423 Finans ved BI. Svar ALLTID på norsk. Gi aldri fasit direkte. Forklar intuisjon først. Vis HP 10bII+ tastetrykk. Behandle feil som læringsmomenter. Avslutt med neste spørsmål."""
+        sys = tr("ai_system_short")
         def ai_send(msg, bonus=0):
             st.session_state.points += bonus
             st.session_state.study_msgs.append({"role":"user","content":msg})
@@ -1300,11 +1614,11 @@ PEDAGOGISKE REGLER:
                 try:
                     reply = call_ai(client, st.session_state.study_msgs, sys)
                     st.session_state.study_msgs.append({"role":"assistant","content":reply})
-                except Exception as e: st.error(f"API-feil: {e}")
+                except Exception as e: st.error(f"{tr('api_error')}: {e}")
             st.rerun()
 
-        # Svarknapper A/B/C/D — klikk i stedet for å skrive
-        st.markdown('<p class="meta">Velg svar:</p>', unsafe_allow_html=True)
+        # Svarknapper A/B/C/D
+        st.markdown(f'<p class="meta">{tr("choose_answer")}</p>', unsafe_allow_html=True)
         ac1, ac2, ac3, ac4 = st.columns(4)
         with ac1:
             if st.button("A", key="ai_a", use_container_width=True): ai_send("A", 3)
@@ -1318,24 +1632,23 @@ PEDAGOGISKE REGLER:
         # Verktøyknapper
         q1, q2, q3, q4 = st.columns(4)
         with q1:
-            if st.button("✅ Riktig +15", use_container_width=True): record_correct(); ai_send("Jeg svarte riktig.", 15)
+            if st.button(tr("correct_btn"), use_container_width=True): record_correct(); ai_send(tr("ai_correct_msg"), 15)
         with q2:
-            if st.button("❓ Hint", use_container_width=True): ai_send("Gi meg et hint — men ikke svaret.")
+            if st.button(tr("hint_btn"), use_container_width=True): ai_send(tr("ai_hint_msg"))
         with q3:
-            if st.button("⏭ Ny oppgave", use_container_width=True): record_attempt(); ai_send("Ny oppgave, gjerne annet undertema.", 5)
+            if st.button(tr("new_exercise_btn"), use_container_width=True): record_attempt(); ai_send(tr("ai_new_msg"), 5)
         with q4:
-            if st.button("💡 Forklar", use_container_width=True): ai_send("Forklar løsningen grundig med intuisjon og kalkulatorsteg.")
+            if st.button(tr("explain_btn"), use_container_width=True): ai_send(tr("ai_explain_msg"))
 
-        # Fritekst for beregningsoppgaver og lengre svar
-        ui = st.chat_input("Skriv svar eller tall...")
+        ui = st.chat_input(tr("answer_label"))
         if ui: ai_send(ui, 3)
-        if st.button("🔄 Nullstill"): st.session_state.study_msgs = []; st.rerun()
+        if st.button(tr("reset")): st.session_state.study_msgs = []; st.rerun()
 
 # ─── FORMLER ─────────────────────────────────────────────────────────────────
 
 with tabs[5]:
-    st.markdown("### 📐 Formelsamling")
-    search = st.text_input("Søk...", placeholder="NPV, CAPM, annuitet")
+    st.markdown(f"### 📐 {tr('formulas_title')}")
+    search = st.text_input(tr("search_formulas"), placeholder="NPV, CAPM, annuitet")
     for g in ALL_FORMULAS:
         sl = search.lower() if search else ""
         ms = [(f,e,n) for f,e,n in g["formulas"] if not search or any(sl in x.lower() for x in [f,e,n,g["group"]])]
@@ -1347,10 +1660,11 @@ with tabs[5]:
 # ─── CHAT ────────────────────────────────────────────────────────────────────
 
 with tabs[6]:
-    st.markdown("### 💬 Fri chat")
-    CS = "Du er finanstutor for BØK 3423 Finans (BI). Norsk. Direkte. Bruk formler, eksempler og HP 10bII+ tastetrykk."
+    st.markdown(f"### {tr('chat_title')}")
+    CS = tr("chat_system")
     if not st.session_state.chat_msgs:
-        for idx, sug in enumerate(["Forklar CAPM","IRR vs NPV?","WACC steg for steg","Gordon Growth?","MM med/uten skatt","Sharpe vs beta"]):
+        suggestions = tr("chat_suggestions")
+        for idx, sug in enumerate(suggestions):
             if idx%3==0: sc = st.columns(3)
             with sc[idx%3]:
                 if st.button(sug, key=f"sg_{idx}", use_container_width=True):
@@ -1362,7 +1676,7 @@ with tabs[6]:
                     st.rerun()
     for msg in st.session_state.chat_msgs:
         with st.chat_message("human" if msg["role"]=="user" else "ai"): st.markdown(msg["content"])
-    ci = st.chat_input("Spør...")
+    ci = st.chat_input(tr("chat_input"))
     if ci:
         st.session_state.chat_msgs.append({"role":"user","content":ci})
         c = get_client()
@@ -1370,20 +1684,20 @@ with tabs[6]:
             try: st.session_state.chat_msgs.append({"role":"assistant","content":call_ai(c, st.session_state.chat_msgs, CS)})
             except Exception as e: st.error(str(e))
         st.rerun()
-    if st.session_state.chat_msgs and st.button("🗑 Tøm"): st.session_state.chat_msgs=[]; st.rerun()
+    if st.session_state.chat_msgs and st.button(tr("clear_chat")): st.session_state.chat_msgs=[]; st.rerun()
 
 # ─── FREMGANG (Motiverende, viser forbedring) ───────────────────────────────
 
 with tabs[7]:
-    st.markdown("### 📊 Fremgang")
+    st.markdown(f"### {tr('progress_title')}")
     m1,m2,m3 = st.columns(3)
     dl = days_left()
-    with m1: st.metric("Poeng ⚡", st.session_state.points)
-    with m2: st.metric("��kter 📚", st.session_state.sessions)
-    with m3: st.metric("Dager 📅", dl, delta=f"-{dl}" if dl<=14 else None, delta_color="inverse")
+    with m1: st.metric(tr("points"), st.session_state.points)
+    with m2: st.metric(tr("sessions_label"), st.session_state.sessions)
+    with m3: st.metric(tr("days_label"), dl, delta=f"-{dl}" if dl<=14 else None, delta_color="inverse")
 
     st.markdown("---")
-    st.markdown("### Temaer — din utvikling")
+    st.markdown(f"### {tr('topics_development')}")
     for t in TOPICS:
         acc = get_topic_accuracy(t["id"])
         subs = t["subs"]
@@ -1402,7 +1716,7 @@ with tabs[7]:
     hist = st.session_state.history
     if hist:
         st.markdown("---")
-        st.markdown("### 📈 Forbedring over tid")
+        st.markdown(f"### {tr('improvement_over_time')}")
         for tid, entries in hist.items():
             tname = topic_by_id(tid)["name"] if topic_by_id(tid) else tid
             if len(entries) >= 2:
@@ -1412,35 +1726,36 @@ with tabs[7]:
                 if diff > 0:
                     st.markdown(f'<div class="feedback-correct">📈 <strong>{tname}:</strong> {first_acc}% → {last_acc}% (+{diff}pp)</div>', unsafe_allow_html=True)
                 elif diff < 0:
-                    st.markdown(f'<div class="feedback-wrong">📉 <strong>{tname}:</strong> {first_acc}% → {last_acc}% ({diff}pp) — øv mer!</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="feedback-wrong">📉 <strong>{tname}:</strong> {first_acc}% → {last_acc}% ({diff}pp) {tr("practice_more")}</div>', unsafe_allow_html=True)
                 else:
-                    st.markdown(f'<div class="topic-item">{tname}: Stabilt {last_acc}%</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="topic-item">{tname}: {tr("stable_at")} {last_acc}%</div>', unsafe_allow_html=True)
 
 # ─── KALKULATOR ──────────────────────────────────────────────────────────────
 
 with tabs[8]:
-    st.markdown("### 🔢 HP 10bII+ Kalkulator")
-    st.caption("La feltet stå tomt for ukjent.")
+    st.markdown(f"### {tr('calculator_title')}")
+    st.caption(tr("calculator_caption"))
     with st.form("tvm"):
-        f1,f2,f3,f4,f5 = st.columns(5)
-        with f1: nv=st.text_input("N",placeholder="?")
-        with f2: iv=st.text_input("I/YR%",placeholder="?")
-        with f3: pvv=st.text_input("PV",placeholder="?")
-        with f4: pmtv=st.text_input("PMT",placeholder="?")
-        with f5: fvv=st.text_input("FV",placeholder="?")
-        sub = st.form_submit_button("▶ Beregn", use_container_width=True)
+        r1c1, r1c2, r1c3 = st.columns(3)
+        with r1c1: nv=st.text_input("N",placeholder="?")
+        with r1c2: iv=st.text_input("I/YR%",placeholder="?")
+        with r1c3: pvv=st.text_input("PV",placeholder="?")
+        r2c1, r2c2 = st.columns(2)
+        with r2c1: pmtv=st.text_input("PMT",placeholder="?")
+        with r2c2: fvv=st.text_input("FV",placeholder="?")
+        sub = st.form_submit_button(tr("calculate"), use_container_width=True)
     if sub:
         def pv(v):
             v=v.strip().replace(",",".").replace(" ","")
             return float(v) if v else None
         try: result = solve_tvm(pv(nv),pv(iv),pv(pvv),pv(pmtv),pv(fvv))
-        except ValueError: result = {"error":"Ugyldig tall."}
+        except ValueError: result = {"error": tr("invalid_number")}
         if "error" in result: st.error(result["error"])
         else:
             fmt = f"{result['value']:,.2f}".replace(","," ").replace(".",",")
             st.markdown(f'<div class="result-display">{result["var"]} = {fmt}</div>', unsafe_allow_html=True)
     st.markdown("---")
-    st.markdown("**Eksempler:**")
+    st.markdown(f"**{tr('examples')}**")
     st.code("Annuitet: N=3, I/YR=6, PV=300000, FV=0 → PMT = −112 297")
     st.code("YTM: N=4, PV=−932255, PMT=50000, FV=1000000 → I/YR = ?")
-    st.info("Negativ = utbetaling fra deg. Positiv = innbetaling.")
+    st.info(tr("calc_sign_note"))
